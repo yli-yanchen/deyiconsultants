@@ -1,66 +1,91 @@
 import React, { Component, useState, useEffect } from "react";
-import Navigation from "./components/Navigation.js";
+import { Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import "./stylesheets/styles.css";
 
+import Navigation from "./components/Navigation.js";
 import Signup from "./subpage/Signup.js";
 import Home from "./subpage/Home.js";
 import About from "./subpage/About.js";
 import Expertice from "./subpage/Expertice.js";
 import Project from "./subpage/Project.js";
 import Contact from "./subpage/Contact.js";
-import { Route, Routes } from "react-router-dom";
 
-// const App = () => {
-//   return (
-//     <>
-//       <h1>this is APP page</h1>
-//       <Navigation />
-//       <Routes>
-//         <Route path="/" element={<Home />} />
-//         <Route path="/about" element={<About />} />
-//         <Route path="/expertice" element={<Expertice />} />
-//         <Route path="/project" element={<Project />} />
-//         <Route path="/contact" element={<Contact />} />
-//         <Route path="/signup" element={<Signup />} />
-//       </Routes>
-//     </>
-//   );
-// }
 
 const App = () => {
-  let component;
-  switch (window.location.pathname) {
-    case "/" || "/home":
-      component = <Home />;
-      break;
 
-    case "/about":
-      component = <About />;
-      break;
+    const homeRouter = createBrowserRouter([
+      {
+        path: "/" || "/home",
+        element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/project",
+        element: <Project />,
+      },
+      {
+        path: "/expertice",
+        element: <Expertice />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+    ]);
 
-    case "/expertice":
-      component = <Expertice />;
-      break;
+    return (
+      <div className="router">
+        <main>
+            <Navigation />
+            <RouterProvider router={homeRouter} />
+        </main>
+      </div>
+    );
+}
 
-    case "/project":
-      component = <Project />;
-      break;
+// const App = () => {
+//   let component;
+//   switch (window.location.pathname) {
+//     case "/" || "/home":
+//       component = <Home />;
+//       break;
 
-    case "/contact":
-      component = <Contact />;
-      break;
+//     case "/about":
+//       component = <About />;
+//       break;
 
-    case "/signup":
-      component = <Signup />;
-      break;
-  }
+//     case "/expertice":
+//       component = <Expertice />;
+//       break;
 
-  return (
-    <div>
-      <Navigation />
-      {component}
-    </div>
-  );
-};
+//     case "/project":
+//       component = <Project />;
+//       break;
+
+//     case "/contact":
+//       component = <Contact />;
+//       break;
+
+//     case "/signup":
+//       component = <Signup />;
+//       break;
+//   }
+
+//   return (
+//     <div>
+//       <Navigation />
+//       {component}
+//     </div>
+//   );
+// };
 
 export default App;

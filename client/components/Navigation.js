@@ -5,7 +5,7 @@ import { LiaSearchSolid } from "react-icons/lia";
 const Navigation = () => {
     return (
       <div className="navContainer">
-        <a href="/api/">
+        <a href="/">
           <img className="logo" src={logo} alt="DEYI Logo" />
         </a>
 
