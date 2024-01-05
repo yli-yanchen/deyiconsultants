@@ -87,30 +87,21 @@
     margin: 60px auto;
 }
 
-.SignupSubmitButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 40px;
-    color: #191970;
-    background: white;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.LogInSubmitButton {
+.submit {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100px;
     height: 40px;
     color: white;
-    background:#191970;;
+    background: #191970;
     border-radius: 8px;
     font-size: 15px;
     font-weight: 500;
     cursor: pointer;
 }
+
+    .gray {
+        color: white;
+        background: gray;;
+    }

@@ -12,7 +12,9 @@ const Login = () => {
     const [passwordError, setPasswordError] = useState("");
     const [firstNameError, setFirstNameError] = useState(null);
     const [lastNameError, setLastNameError] = useState(null);
-  
+    const [action, setAction] = useState("sign up");
+    
+
     const logInClick = () => {
 
     };
@@ -69,26 +71,33 @@ const Login = () => {
 
     return (
       <div className="SignupContainer">
-        <div className="SignupTitle"> Welcome to DEYI! </div>
+        <div className="SignupTitle"> {action==="log in" ? "Welcome Back!" : "Welcome to DEYI!"}</div>
         <div className="underline"></div>
         <br />
         <div className="signupInput">
-          <input
-            value={firstName}
-            placeholder="First Name"
-            onChange={(ev) => setFirstName(ev.target.value)}
-            className={"inputBox"}
-          />
-          <br />
-          <div className="signupInput"></div>
-          <input
-            value={lastName}
-            placeholder="Last Name"
-            onChange={(ev) => setLastName(ev.target.value)}
-            className={"inputBox"}
-          />
+          {action === "log in" ? (
+            <div />
+          ) : (
+            <div>
+              {" "}
+              <input
+                value={firstName}
+                placeholder="First Name"
+                onChange={(ev) => setFirstName(ev.target.value)}
+                className={"inputBox"}
+              />
+              <br />
+              <input
+                value={lastName}
+                placeholder="Last Name"
+                onChange={(ev) => setLastName(ev.target.value)}
+                className={"inputBox"}
+              />
+              <br />
+            </div>
+          )}
         </div>
-        <br />
+
         <div className="signupInput">
           <input
             value={email}
@@ -107,17 +116,23 @@ const Login = () => {
           />
           <lable className="errorLabel">{passwordError}</lable>
         </div>
-        <div className="forgot-password">
-          Forgot Password? <span>Click Here!</span>
-        </div>
-        <br />
+
+        {action === "sign up" ? (
+          <div></div>
+        ) : (
+          <div className="forgot-password">
+            Forgot Password? <span>Click Here!</span>
+          </div>
+        )}
 
         <div className="signup-submit-container">
           <Link to={"/signup/newuser"}>
             <button
               type="button"
-              className="SignupSubmitButton"
-              onClick={creatUserClick}
+              className={action === "log in" ? "submit gray" : "submit"}
+              onClick={() => {
+                setAction("sign up");
+              }}
             >
               Sign up
             </button>
@@ -125,8 +140,10 @@ const Login = () => {
 
           <button
             type="button"
-            className="LogInSubmitButton"
-            onClick={logInClick}
+            className={action === "sign up" ? "submit gray" : "submit"}
+            onClick={() => {
+              setAction("log in");
+            }}
           >
             Log In
           </button>
