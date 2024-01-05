@@ -2,7 +2,7 @@ const router = require("express").Router();
 const path = require("path");
 const userController = require("../controllers/userController");
 
-router.post("/newuser", userController.createUser, (req, res) => {
+router.post("/register", userController.createUser, (req, res) => {
     res.send("new user created");
 });
 

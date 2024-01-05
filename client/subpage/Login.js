@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import "../stylesheets/loginStyles.css";
 
 
-const Signup = () => {
+const Login = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -49,7 +50,7 @@ const Signup = () => {
             password
         };
 
-        fetch("/signup/newuser", {
+        fetch("/register", {
           method: "POST",
           headers: {
             "Content-Type": "Application/JSON",
@@ -69,8 +70,9 @@ const Signup = () => {
     return (
       <div className="SignupContainer">
         <div className="SignupTitle"> Welcome to DEYI! </div>
+        <div className="underline"></div>
         <br />
-        <div className="SignupInput">
+        <div className="signupInput">
           <input
             value={firstName}
             placeholder="First Name"
@@ -78,7 +80,7 @@ const Signup = () => {
             className={"inputBox"}
           />
           <br />
-          <div className="SignupInput"></div>
+          <div className="signupInput"></div>
           <input
             value={lastName}
             placeholder="Last Name"
@@ -86,7 +88,8 @@ const Signup = () => {
             className={"inputBox"}
           />
         </div>
-        <div className="SignupInput">
+        <br />
+        <div className="signupInput">
           <input
             value={email}
             placeholder="Email"
@@ -95,7 +98,7 @@ const Signup = () => {
           />
           <lable className="errorLabel">{emailError}</lable>
           <br />
-          <div className="SignupInput"></div>
+          <div className="signupInput"></div>
           <input
             value={password}
             placeholder="Password"
@@ -104,45 +107,32 @@ const Signup = () => {
           />
           <lable className="errorLabel">{passwordError}</lable>
         </div>
-        <br />
-
-        <Link to={"/signup/newuser"}>
-          <button
-            type="button"
-            className="SignupInputButton"
-            onClick={creatUserClick}
-          >
-            Sign up
-          </button>
-        </Link>
-
-        <button
-          type="button"
-          className="SignupInputButton"
-          onClick={logInClick}
-        >
-          Log In
-        </button>
-
-        {/* <div className="SignupInput">
-            <input
-            className={"SignupInputButton"}
-            type="button"
-            onClick={creatUserClick}
-            value={"Sign Up"}
-            />
+        <div className="forgot-password">
+          Forgot Password? <span>Click Here!</span>
         </div>
         <br />
-        <div className="SignupInput">
-            <input
-            className={"SignupInputButton"}
+
+        <div className="signup-submit-container">
+          <Link to={"/signup/newuser"}>
+            <button
+              type="button"
+              className="SignupSubmitButton"
+              onClick={creatUserClick}
+            >
+              Sign up
+            </button>
+          </Link>
+
+          <button
             type="button"
-            onClick={onButtonClick}
-            value={"Log In"}
-            />
-        </div> */}
+            className="LogInSubmitButton"
+            onClick={logInClick}
+          >
+            Log In
+          </button>
+        </div>
       </div>
     );
     };
 
-    export default Signup;
+    export default Login;

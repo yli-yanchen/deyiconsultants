@@ -24,7 +24,7 @@ const Navigation = () => {
             <Link to={"/contact"}>CONTACT</Link>
           </li>
           <li className="navitem">
-            <Link to={"/signup"}>SIGN IN</Link>
+            <Link to={"/login"}>LOG IN</Link>
           </li>
         </ul>
 

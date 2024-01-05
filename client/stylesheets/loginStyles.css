@@ -1,0 +1,116 @@
+.SignupContainer {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vw;
+    background-image: url("../../docs/assets/images/homepagePicNoText.png");
+    background-size: cover;
+    margin: 0%;
+    background-position: 100vw;
+    background-size: 100vw;
+}
+
+.SignupTitle {
+    font-family: 'Barlow Semi Condensed';
+    font-weight: 200;
+    display: flex;
+    flex-direction: column;
+    font-size: 4vw;
+    font-weight: bolder;
+    align-items: center;
+    justify-content: center;
+    color: #191970;
+    margin-top: 30px;
+    width: 100%;
+    gap: 9px;
+}
+
+.text {
+    color:#191970;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.underline {
+    width: 188px;
+    height: 6px;
+    border-radius: 9px;
+    background: whitesmoke;
+}
+
+.signupInput {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.inputBox {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 300px;
+    height: 40px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.inputBox input {
+    height: 40px;
+    width: 300px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color:#191970;
+    font-size: 15px;
+}
+
+.icon {
+    margin: 0px 30px;
+}
+
+.forgot-password {
+    margin-top: 27px;
+    color: #191970;
+    font-size: 15px;
+    align-items: center;
+}
+
+.forgot-password span {
+    color: white;
+    cursor: pointer;
+}
+
+.signup-submit-container {
+    display: flex;
+    gap:  30px;
+    margin: 60px auto;
+}
+
+.SignupSubmitButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    color: #191970;
+    background: white;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.LogInSubmitButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    color: white;
+    background:#191970;;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
