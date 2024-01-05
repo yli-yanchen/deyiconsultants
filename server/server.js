@@ -29,7 +29,6 @@ mongoose
 
 
 app.use("/login", userRoutes);
-app.use("/register", userRoutes);
 
 
 app.get("/*", (req, res) => {

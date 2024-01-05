@@ -27,7 +27,7 @@ userController.createUser = (req, res, next) => {
           );
         });
     } else {
-      res.redirect("/home");
+      res.redirect("/login");
     }
   } catch (err) {
     return next("Error in userController.createUser: " + JSON.stringify(err));

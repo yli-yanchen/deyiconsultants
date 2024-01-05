@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import "../stylesheets/loginStyles.css";
+import "../stylesheets/loginstyles.css";
 
 
 const Login = () => {
@@ -71,7 +71,10 @@ const Login = () => {
 
     return (
       <div className="SignupContainer">
-        <div className="SignupTitle"> {action==="log in" ? "Welcome Back!" : "Welcome to DEYI!"}</div>
+        <div className="SignupTitle">
+          {" "}
+          {action === "log in" ? "Welcome Back!" : "Welcome to DEYI!"}
+        </div>
         <div className="underline"></div>
         <br />
         <div className="signupInput">
@@ -126,7 +129,7 @@ const Login = () => {
         )}
 
         <div className="signup-submit-container">
-          <Link to={"/signup/newuser"}>
+          <Link to={"/signup/register"}>
             <button
               type="button"
               className={action === "log in" ? "submit gray" : "submit"}
