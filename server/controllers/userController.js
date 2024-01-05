@@ -1,10 +1,10 @@
-
+const User = require("../models/userModel");
 
 const userController = {};
 
 userController.createUser = (req, res, next) => {
   const newUser = new User({
-    firstName: req.body.username,
+    firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
     password: req.body.password,
@@ -27,7 +27,7 @@ userController.createUser = (req, res, next) => {
           );
         });
     } else {
-      res.redirect("/login");
+      res.redirect("/home");
     }
   } catch (err) {
     return next("Error in userController.createUser: " + JSON.stringify(err));

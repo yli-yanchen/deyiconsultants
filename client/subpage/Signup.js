@@ -49,7 +49,7 @@ const Signup = () => {
             password
         };
 
-        fetch("/signup/newUser", {
+        fetch("/signup/newuser", {
           method: "POST",
           headers: {
             "Content-Type": "Application/JSON",
@@ -68,7 +68,7 @@ const Signup = () => {
 
     return (
       <div className="SignupContainer">
-        <div className="SignupTitle"> Welcome Back! </div>
+        <div className="SignupTitle"> Welcome to DEYI! </div>
         <br />
         <div className="SignupInput">
           <input
@@ -106,13 +106,15 @@ const Signup = () => {
         </div>
         <br />
 
-        <button
-          type="button"
-          className="SignupInputButton"
-          onClick={creatUserClick}
-        >
-          Sign Up
-        </button>
+        <Link to={"/signup/newuser"}>
+          <button
+            type="button"
+            className="SignupInputButton"
+            onClick={creatUserClick}
+          >
+            Sign up
+          </button>
+        </Link>
 
         <button
           type="button"
