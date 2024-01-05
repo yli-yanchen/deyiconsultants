@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../docs/assets/images/logo.png"; 
 import { LiaSearchSolid } from "react-icons/lia";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
     return (
@@ -11,19 +12,19 @@ const Navigation = () => {
 
         <ul className="navbar">
           <li className="navitem">
-            <a href="/about">ABOUT</a>
+            <Link to={"/about"}>ABOUT</Link>
           </li>
           <li className="navitem">
-            <a href="/expertice">EXPERTICE</a>
+            <Link to={"/expertice"}>EXPERTICE</Link>
           </li>
           <li className="navitem">
-            <a href="/project">PROJECT</a>
+            <Link to={"/project"}>PROJECT</Link>
           </li>
           <li className="navitem">
-            <a href="/contact">CONTACT</a>
+            <Link to={"/contact"}>CONTACT</Link>
           </li>
           <li className="navitem">
-            <a href="/signup">SIGN IN</a>
+            <Link to={"/signup"}>SIGN IN</Link>
           </li>
         </ul>
 

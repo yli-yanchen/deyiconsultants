@@ -49,7 +49,7 @@ const Signup = () => {
             password
         };
 
-        fetch("/api/signup/newUser", {
+        fetch("/signup/newUser", {
           method: "POST",
           headers: {
             "Content-Type": "Application/JSON",

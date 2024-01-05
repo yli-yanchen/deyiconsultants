@@ -1,6 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { Route } from "react-router-dom";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./stylesheets/styles.css";
 
@@ -14,40 +13,21 @@ import Contact from "./subpage/Contact.js";
 
 
 const App = () => {
-
-    const homeRouter = createBrowserRouter([
-      {
-        path: "/" || "/home",
-        element: <Home />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/project",
-        element: <Project />,
-      },
-      {
-        path: "/expertice",
-        element: <Expertice />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
-    ]);
-
     return (
       <div className="router">
-        <main>
+        <React.StrictMode>
+          <Router>
             <Navigation />
-            <RouterProvider router={homeRouter} />
-        </main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/project" element={<Project />} />
+              <Route path="/expertice" element={<Expertice />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/signup" element={<Signup />} />
+            </Routes>
+          </Router>
+        </React.StrictMode>
       </div>
     );
 }

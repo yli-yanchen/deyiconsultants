@@ -3,19 +3,6 @@ const Dotenv = require("dotenv-webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  devServer: {
-    static: {
-      directory: path.join(__dirname, "/build"),
-      publicPath: "/",
-    },
-    hot: true,
-    historyApiFallback: true,
-    compress: true,
-    port: 8080,
-    proxy: {
-      "/api": "http://localhost:3000",
-    },
-  },
   entry: path.join(__dirname, "client", "index.js"),
   output: {
     path: path.resolve(__dirname, "build"),
@@ -52,6 +39,48 @@ module.exports = {
       template: path.join(__dirname, "client", "index.html"),
     }),
   ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "/build"),
+      publicPath: "/",
+    },
+    hot: true,
+    historyApiFallback: true,
+    compress: true,
+    port: 8080,
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000/api",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+      "/about": {
+        target: "http://localhost:3000/about",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/about/, ""),
+      },
+      "/expertice": {
+        target: "http://localhost:3000/expertice",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/expertice/, ""),
+      },
+      "/project": {
+        target: "http://localhost:3000/project",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/project/, ""),
+      },
+      "/contact": {
+        target: "http://localhost:3000/contact",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/contact/, ""),
+      },
+      "/signup": {
+        target: "http://localhost:3000/signup",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/signup/, ""),
+      },
+    },
+  },
   resolve: {
     extensions: [".js", ".jsx"],
   },

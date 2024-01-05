@@ -27,11 +27,12 @@ mongoose
   .catch((error) => console.log(error.message));
 
 
-app.use("/api/signup", userRoutes);
+
+app.use("/signup", userRoutes);
 
 
-app.get("/", (req, res) => {
-  return res.status(200).sendFile(path.resolve(__dirname, "client", "./index.html"));
+app.get("/*", (req, res) => {
+  return res.status(200).sendFile(path.resolve(__dirname, "build", "./index.html"));
 });
 
 
