@@ -74,10 +74,10 @@ module.exports = {
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/contact/, ""),
       },
-      "/signup": {
-        target: "http://localhost:3000/signup",
+      "/login": {
+        target: "http://localhost:3000/login",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/signup/, ""),
+        rewrite: (path) => path.replace(/^\/login/, ""),
       },
     },
   },

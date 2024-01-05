@@ -19,7 +19,9 @@ const Login = () => {
 
     };
 
-    const creatUserClick = () => {
+    const creatUserClick = (e) => {
+        e.preventDefault();
+
         if (!firstName) {
             setFirstNameError("required");
             return 
@@ -52,14 +54,18 @@ const Login = () => {
             password
         };
 
-        fetch("/register", {
+        console.log(user);
+        fetch("/login/register", {
           method: "POST",
           headers: {
-            "Content-Type": "Application/JSON",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(user),
         })
-          .then((resp) => resp.json())
+          .then((resp) => {
+            console.log("resp: ", resp);
+            return resp.json();
+          })
           .then((data) => {
             console.log(data);
           })
@@ -112,6 +118,7 @@ const Login = () => {
           <br />
           <div className="signupInput"></div>
           <input
+            type="password"
             value={password}
             placeholder="Password"
             onChange={(ev) => setPassword(ev.target.value)}
@@ -129,12 +136,13 @@ const Login = () => {
         )}
 
         <div className="signup-submit-container">
-          <Link to={"/signup/register"}>
+          <Link to={"/login/register"}>
             <button
               type="button"
               className={action === "log in" ? "submit gray" : "submit"}
-              onClick={() => {
-                setAction("sign up");
+              onClick={(e) => {
+                  creatUserClick(e);
+                  setAction("sign up");            
               }}
             >
               Sign up

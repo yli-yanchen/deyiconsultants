@@ -2,35 +2,43 @@ const User = require("../models/userModel");
 
 const userController = {};
 
+userController.getAllUsers = async (req, res, next) => {
+  const users = await User.find();
+  return next();
+
+  // User.find({firstName: "Nancy"}, (err, users) => {
+  //   console.log("users from user.find: ", users);
+  //   if (err)
+  //     return next(
+  //       "Error in userController.getAllUsers: " + JSON.stringify(err)
+  //     );
+
+  //   console.log("users from getAllUsers: ", users);
+  //   res.locals.users = users;
+  //   return next();
+  // })
+  // .catch(error => {
+  //   console.log("catch error in getAllUsers: ", error);
+  // });
+};
+
 userController.createUser = (req, res, next) => {
-  const newUser = new User({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-  });
-  console.log(newUser);
+  console.log(">>> req.body from createUser: ", req.body);
+  const { firstName, lastName, email, password } = req.body;
+
   try {
-    if (
-      newUser.firstName &&
-      newUser.lastName &&
-      newUser.username &&
-      newUser.password
-    ) {
-      newUser
-        .save()
-        .then((res.locals.ssid = newUser._id))
-        .then(next())
-        .catch((err) => {
-          return next(
-            "Error in userController.createUser: " + JSON.stringify(err)
-          );
-        });
-    } else {
-      res.redirect("/login");
+    if ( firstName && lastName && email && password ) {
+      User
+      .create({firstName, lastName, email, password})
+      .then(next())
+      .catch((err) => {
+        return next(
+            "Error in userController.createUser save new User: " + JSON.stringify(err)
+        );
+      })
     }
   } catch (err) {
-    return next("Error in userController.createUser: " + JSON.stringify(err));
+      return next("Error in userController.createUser: " + JSON.stringify(err));
   }
 };
 

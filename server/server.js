@@ -20,11 +20,11 @@ const CONNECTION_URL =
 const PORT = 3000;
 
 mongoose
-  .connect(CONNECTION_URL)
+  .connect(CONNECTION_URL, { dbName: "test" })
   .then(() =>
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
   )
-  .catch((error) => console.log(error.message));
+  .catch((error) => console.log("error from mongoose connection", error.message));
 
 
 
