@@ -7,7 +7,7 @@ router.get("/", userController.getAllUsers, (req, res) => {
 });
 
 router.post("/register", userController.createUser, (req, res) => {
-  return res.json(("new user created"));
+  res.redirect("http://localhost:3000");
 });
 
 module.exports = router;

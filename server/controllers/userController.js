@@ -23,7 +23,6 @@ userController.getAllUsers = async (req, res, next) => {
 };
 
 userController.createUser = (req, res, next) => {
-  console.log(">>> req.body from createUser: ", req.body);
   const { firstName, lastName, email, password } = req.body;
 
   try {

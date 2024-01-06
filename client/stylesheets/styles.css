@@ -22,6 +22,15 @@ body {
 /* for main container */
 .MainContainer {
     overflow: hidden;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vw;
+    background-image: url("../../docs/assets/images/homepagePicNoText.png");
+    background-size: cover;
+    background-position: 100vw;
+    background-size: 100vw;
 }
 
 
@@ -91,39 +100,31 @@ a:hover {
 /* for Homepage picture */
 .homepic {
     width: 100%;
-    height: auto;
+    height: 250pt;
     object-fit: cover;
 }
 
 
-/* for Signup Page - Log In */
-
-
-.SignupInputButton {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 3vw;
-    width: max-content;
-    border: 2px solid darkgray;
-    border-radius: .5vw;
-    font-size: 1.2vw;
+/* for Homepage Title */
+.underline {
+    width: 188px;
+    height: 6px;
+    border-radius: 9px;
+    background: whitesmoke;
 }
 
-.SignupInput > .errorLabel {
-    color: red;
-    font-size: 1.2vw;
+
+.homeh1 {
+    font-size: 35pt;
+    color: rgb(121, 123, 130);
 }
 
-.inputBox {
-    height: 3vw;
-    width: 25vw;
-    font-size: 1.2vw;
-    border-radius: 6px;
-    border: 2px solid darkgray;
-    padding-left: 8px;
+.homeh3 {
+    font-size: 25pt;
+    color: #191970;
+    margin-top: 500pt;
 }
+
 
 /* for responsive screen */
 @media screen and (max-width: 980px) {
