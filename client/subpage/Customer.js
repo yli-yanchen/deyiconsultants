@@ -3,7 +3,7 @@ import React from "react";
 const Customer = () => {
   return (
     <div className="MainContainer">
-        <h1>Hello World!</h1>
+      <h1 className="homeh1"> Hello World!</h1>
     </div>
   );
 };
