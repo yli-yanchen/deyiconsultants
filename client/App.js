@@ -10,6 +10,7 @@ import About from "./subpage/About.js";
 import Expertice from "./subpage/Expertice.js";
 import Project from "./subpage/Project.js";
 import Contact from "./subpage/Contact.js";
+import Customer from "./subpage/Customer.js";
 
 
 const App = () => {
@@ -24,7 +25,9 @@ const App = () => {
               <Route path="/project" element={<Project />} />
               <Route path="/expertice" element={<Expertice />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login />} >
+                <Route path="/customer" element={<Customer />} />
+              </Route>
             </Routes>
           </Router>
         </React.StrictMode>
