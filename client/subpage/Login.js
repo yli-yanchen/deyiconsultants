@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import "../stylesheets/loginstyles.css";
 
 
@@ -20,52 +20,68 @@ const Login = () => {
     };
 
     const creatUserClick = (e) => {
-        e.preventDefault();
-        if ("" === firstName) {
-            setFirstNameError("Required");
-        }
-        if (!lastName) {
-            setLastNameError("Required");
-        }
-        if ("" == email) {
-            setEmailError("Please Enter Your Email");
-        }
-        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-            setEmailError("Please Enter a Valid Email Address");
-        }
-        if ("" == password) {
-            setPasswordError("Please Enter a Password");
-        }
-        if (password.length < 7) {
-            setPasswordError("Please Enter a Password with Length Larger Than 7")
-        }
+      e.preventDefault();
+      if ("" === firstName) {
+        setFirstNameError("Required");
+      }
+      if (!lastName) {
+        setLastNameError("Required");
+      }
+      if ("" == email) {
+        setEmailError("Please Enter Your Email");
+      }
+      if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+        setEmailError("Please Enter a Valid Email Address");
+      }
+      if ("" == password) {
+        setPasswordError("Please Enter a Password");
+      }
+      if (password.length < 7) {
+        setPasswordError("Please Enter a Password with Length Larger Than 7");
+      }
 
-        const user = {
-            firstName,
-            lastName,
-            email,
-            password,
-        };
+      const user = {
+        firstName,
+        lastName,
+        email,
+        password,
+      };
 
-        if (firstName && lastName && email && password) fetchregister(user);
+      if (firstName && lastName && email && password) fetchregister(user);
+      
 
-        async function fetchregister(data) {
-            try {
-                const resp = await fetch("/login/register", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(data),
-                });
+      async function fetchregister(data) {
+        try {
+            const resp = await fetch("/login/register", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
 
-                const result = await resp.json();
-                console.log("Success: ", result);
-            }
-            catch(error) {
-                console.log("fetchregister Error: ", error);
-            }
+            const result = await resp.json();
+            console.log("Success: ", result);
+            redirect("/login");
+
+        } catch (error) {
+            console.log("fetchregister Error: ", error);
         }
+      }
+
+    //   const navigate = useNavigate();
+    //   if (firstName && lastName && email && password) {
+    //     navigate("/login");
+    //   }
+
+      // if (firstName && lastName && email && password) {
+      //     window.location.assign("/login");
+      //     console.log(">>> before window location");
+      //     alert("Sign Up Successfully");
+      // } else {
+      //     alert("Please Sign Up With Valid Information")
+      // }
+      // }
     }
 
     const signupcontinue = (action, e) => {
