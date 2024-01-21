@@ -4,93 +4,66 @@ import "../stylesheets/loginstyles.css";
 
 
 const Login = () => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [firstNameError, setFirstNameError] = useState(null);
-    const [lastNameError, setLastNameError] = useState(null);
+    const navigate = useNavigate();
     const [action, setAction] = useState("sign up");
-    
 
-    const logInClick = () => {
+    const [userData, setUserData] = useState({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    })
 
-    };
+    const [userError, setUserError] = useState({
+      firstNameError: '',
+      lastNameError: '',
+      emailError: '',
+      passwordError: '',
+    })
 
-    const creatUserClick = (e) => {
+    const handleUserDataChange = (e) => {
       e.preventDefault();
-      if ("" === firstName) {
-        setFirstNameError("Required");
-      }
-      if (!lastName) {
-        setLastNameError("Required");
-      }
-      if ("" == email) {
-        setEmailError("Please Enter Your Email");
-      }
-      if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-        setEmailError("Please Enter a Valid Email Address");
-      }
-      if ("" == password) {
-        setPasswordError("Please Enter a Password");
-      }
-      if (password.length < 7) {
-        setPasswordError("Please Enter a Password with Length Larger Than 7");
-      }
-
-      const user = {
-        firstName,
-        lastName,
-        email,
-        password,
-      };
-
-      if (firstName && lastName && email && password) fetchregister(user);
-      
-
-      async function fetchregister(data) {
-        try {
-            const resp = await fetch("/login/register", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-
-            const result = await resp.json();
-            console.log("Success: ", result);
-            redirect("/login");
-
-        } catch (error) {
-            console.log("fetchregister Error: ", error);
-        }
-      }
-
-    //   const navigate = useNavigate();
-    //   if (firstName && lastName && email && password) {
-    //     navigate("/login");
-    //   }
-
-      // if (firstName && lastName && email && password) {
-      //     window.location.assign("/login");
-      //     console.log(">>> before window location");
-      //     alert("Sign Up Successfully");
-      // } else {
-      //     alert("Please Sign Up With Valid Information")
-      // }
-      // }
+      setUserData({
+        ...userData,
+        [e.target.name]: e.target.value
+      })
     }
 
-    const signupcontinue = (action, e) => {
-        if (action === "sign up") creatUserClick(e);
-        else logInClick(e);
+    const logincontinue = (e) => {
+      e.preventDefault();
+    }
+
+
+    const signupcontinue = (e) => {
+      e.preventDefault();
     };
 
+
+
+    // const creatUserClick = (e) => {
+    //   e.preventDefault();
+    //   if (userData.firstName.trim() === "") {
+    //     setUserError.firstNameError("Required");
+    //   }
+    //   if (userData.lastName.trim() === "") {
+    //     setLastNameError("Required");
+    //   }
+    //   if (userData.email.trim() === "") {
+    //     setEmailError("Please Enter Your Email");
+    //   }
+    //   if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(userData.email)) {
+    //     setUserError.emailError("Please Enter a Valid Email Address");
+    //   }
+    //   if (userData.password.trim() === "") {
+    //     setUserError.passwordError("Please Enter a Password");
+    //   }
+    //   if (userData.password.length < 7) {
+    //     setPasswordError("Please Enter a Password with Length Larger Than 7");
+    //   }
+    // }
+
     return (
-      <div className="SignupContainer">
+      <form className="SignupContainer">
         <div className="SignupTitle">
           {" "}
           {action === "log in" ? "Welcome Back!" : "Welcome to DEYI!"}
@@ -99,48 +72,68 @@ const Login = () => {
         <br />
         <div className="signupInput">
           {action === "log in" ? (
-            <div />
+            <div>
+              {" "}
+              <input
+                name="firstName"
+                value={userData.firstName}
+                placeholder="First Name"
+                onChange={handleUserDataChange}
+                className={"inputBox"}
+              />
+              <lable className="errorLabel">{userError.firstNameError}</lable>
+              <br />
+              <input
+                name="lastName"
+                value={userData.lastName}
+                placeholder="Last Name"
+                onChange={handleUserDataChange}
+                className={"inputBox"}
+              />
+              <lable className="errorLabel">{userError.lastNameError}</lable>
+              <br />
+            </div>
           ) : (
             <div>
               {" "}
               <input
-                value={firstName}
+                name="firstName"
+                value={userData.firstName}
                 placeholder="First Name"
-                onChange={(ev) => setFirstName(ev.target.value)}
+                onChange={handleUserDataChange}
                 className={"inputBox"}
               />
-              <lable className="errorLabel">{firstNameError}</lable>
+              <lable className="errorLabel">{userError.firstNameError}</lable>
               <br />
               <input
-                value={lastName}
+                name="lastName"
+                value={userData.lastName}
                 placeholder="Last Name"
-                onChange={(ev) => setLastName(ev.target.value)}
+                onChange={handleUserDataChange}
                 className={"inputBox"}
               />
-              <lable className="errorLabel">{lastNameError}</lable>
+              <lable className="errorLabel">{userError.lastNameError}</lable>
               <br />
+              <input
+                name="email"
+                value={userData.email}
+                placeholder="email"
+                onChange={handleUserDataChange}
+                className={"inputBox"}
+              />
+              <lable className="errorLabel">{userError.emailError}</lable>
+              <br />
+              <input
+                name="password"
+                type="password"
+                value={userData.password}
+                placeholder="Password"
+                onChange={handleUserDataChange}
+                className={"inputBox"}
+              />
+              <lable className="errorLabel">{userError.passwordError}</lable>
             </div>
           )}
-        </div>
-
-        <div>
-          <input
-            value={email}
-            placeholder="Email"
-            onChange={(ev) => setEmail(ev.target.value)}
-            className={"inputBox"}
-          />
-          <lable className="errorLabel">{emailError}</lable>
-          <br />
-          <div></div>
-          <input
-            type="password"
-            value={password}
-            placeholder="Password"
-            onChange={(ev) => setPassword(ev.target.value)}
-            className={"inputBox"}
-          />
-          <lable className="errorLabel">{passwordError}</lable>
         </div>
 
         {action === "sign up" ? (
@@ -173,16 +166,28 @@ const Login = () => {
           </button>
         </div>
 
-        <button
-          type="button"
-          className="continuebtn"
-          onClick={(e) => {
-            signupcontinue(action, e);
-          }}
-        >
-          Continue
-        </button>
-      </div>
+        {action === "sign up" ? (
+          <button
+            type="button"
+            className="continuebtn"
+            handleSubmit={(e) => {
+              signupcontinue(e);
+            }}
+          >
+            Continue
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="continuebtn"
+            handleSubmit={(e) => {
+              logincontinue(e);
+            }}
+          >
+            Continue
+          </button>
+        )}
+      </form>
     );
     };
 

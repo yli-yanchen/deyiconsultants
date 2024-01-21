@@ -2,43 +2,39 @@ const User = require("../models/userModel");
 
 const userController = {};
 
-userController.getAllUsers = async (req, res, next) => {
-  const users = await User.find();
-  return next();
-
-  // User.find({firstName: "Nancy"}, (err, users) => {
-  //   console.log("users from user.find: ", users);
-  //   if (err)
-  //     return next(
-  //       "Error in userController.getAllUsers: " + JSON.stringify(err)
-  //     );
-
-  //   console.log("users from getAllUsers: ", users);
-  //   res.locals.users = users;
-  //   return next();
-  // })
-  // .catch(error => {
-  //   console.log("catch error in getAllUsers: ", error);
-  // });
-};
-
-userController.createUser = (req, res, next) => {
+userController.createUser = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
-    if ( firstName && lastName && email && password ) {
-      User
-      .create({firstName, lastName, email, password})
-      .then(next())
-      .catch((err) => {
-        return next(
-            "Error in userController.createUser save new User: " + JSON.stringify(err)
-        );
-      })
+    if (firstName && lastName && email && password) {
+        const newUser = new User({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        });
+        console.log(">>> new User saved to database: ", newUser);
+        const newUserinDB = await User.create(newUser);
+        console.log(">>> new User saved to database: ", newUserinDB);
+        return next();
+    } else {
+        const createUserError = {
+          log: "Express error handler caught userController.createUser in try clock",
+          status: 400,
+          message: { err: "Missing Required Fields" },
+        };
+        return next(createUserError);
     }
   } catch (err) {
-      return next("Error in userController.createUser: " + JSON.stringify(err));
+        const createUserDBError = {
+          log: "Express error handler caught userController.createUser error",
+          status: 400,
+          message: { err: "New user cannot be created in the database for some reason" },
+        };
+        return next(createUserDBError);
   }
 };
+
+
 
 module.exports = userController;
