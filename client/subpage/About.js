@@ -5,7 +5,7 @@ import "../stylesheets/aboutstyles.css";
 const About = () => {
   return (
     <div className="AboutContainer">
-      <img className="aboutimg" src={aboutimg} alt="About Image"></img>
+      {/* <img className="aboutimg" src={aboutimg} alt="About Image"></img> */}
       <div className="abouttext">
         <h1 className="abouth1"> Welcome to DEYI Consultant!</h1>
         <p className="aboutp">

@@ -1,9 +1,10 @@
 const router = require("express").Router();
-const path = require("path");
 const userController = require("../controllers/userController");
+const checkNewUser = require("../middleware/checkNewUser");
 
 router.post(
-  "/validation",
+  "/newuser",
+  checkNewUser.duplicateUser,
   userController.createUser,
   (req, res) => {
     return res.json("new user created!");
