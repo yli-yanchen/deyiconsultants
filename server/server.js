@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 
-const userRoute = require("./routes/userRoute");
+const signupRoute = require("./routes/signupRoute");
 
 
 
@@ -28,7 +28,7 @@ mongoose
 
 
 
-app.use("/login", userRoute);
+app.use("/signup", signupRoute);
 
 
 app.get("/*", (req, res) => {

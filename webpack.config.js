@@ -85,6 +85,9 @@ module.exports = {
         // changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/login/, ""),
       },
+      "/signup": {
+        target: "http://localhost:3000",
+      },
     },
   },
   resolve: {

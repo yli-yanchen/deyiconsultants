@@ -14,13 +14,20 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("log in clicked!")
+    console.log("log in clicked!");
   };
+
+  const clicktoSignup = (e) => {
+    e.preventDefault();
+    // console.log("click me to sign up!");
+    navigate("/signup");
+  }
+
 
   return (
     <form className="SignupContainer">
       <div>
-        <h3 className="SignupTitle"> Welcome to DEYI! </h3>
+        <h3 className="SignupTitle"> Welcome Back! </h3>
         <div className="underline"></div>
         <br />
       </div>
@@ -42,7 +49,7 @@ const Login = () => {
       {/* <label className="errorLabel">{userError.passwordError}</label> */}
 
       <div className="forgot-password">
-        Already Have Account? <span>Click Here!</span>
+        No Account? <span onClick={clicktoSignup}>Click Here!</span>
       </div>
 
       <div className="signup-submit-container">

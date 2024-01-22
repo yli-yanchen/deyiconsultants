@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const userController = require("../controllers/userController");
+const signupController = require("../controllers/signupController");
 const checkNewUser = require("../middleware/checkNewUser");
 
 router.post(
   "/newuser",
   checkNewUser.duplicateUser,
-  userController.createUser,
+  signupController.createUser,
   (req, res) => {
-    return res.json("new user created!");
+    return res.status(200).json(res.locals.userid);
   }
 );
 

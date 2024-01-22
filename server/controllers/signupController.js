@@ -16,15 +16,9 @@ userController.createUser = async (req, res, next) => {
         });
         console.log(">>> new User saved to database: ", newUser);
         const newUserinDB = await model.User.create(newUser);
+        res.locals.userid = newUserinDB._id;
         console.log(">>> new User saved to database: ", newUserinDB);
         return next();
-    } else {
-        const createUserError = {
-          log: "Express error handler caught userController.createUser in try clock",
-          status: 400,
-          message: { err: "Missing Required Fields" },
-        };
-        return next(createUserError);
     }
   } catch (err) {
         const createUserDBError = {
