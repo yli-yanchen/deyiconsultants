@@ -14,7 +14,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const loginres = await axios.post("/login", {emailRef, passwordRef});
+    console.log(">>> current email from user input: ", emailRef.current.value);
+    const loginres = await axios.post("/login", {email: emailRef.current.value, password: passwordRef.current.value});
+    if (loginres) {
+      navigate("/about");
+    } else {
+      console.log("Incorrect email or password!");
+    }
   };
 
   const clicktoSignup = (e) => {
