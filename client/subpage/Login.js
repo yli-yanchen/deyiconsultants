@@ -12,14 +12,13 @@ const Login = () => {
   const [res, setRes] = useState(null);
   const [err, setErr] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("log in clicked!");
+    // const loginres = await axios.post("/login", {emailRef, passwordRef});
   };
 
   const clicktoSignup = (e) => {
     e.preventDefault();
-    // console.log("click me to sign up!");
     navigate("/signup");
   }
 

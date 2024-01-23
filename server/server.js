@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 
 const signupRoute = require("./routes/signupRoute");
-
+const loginRoute = require("./routes/loginRoute");
 
 
 app.use(express.json());
@@ -29,6 +29,7 @@ mongoose
 
 
 app.use("/signup", signupRoute);
+app.use("/login", loginRoute);
 
 
 app.get("/*", (req, res) => {
