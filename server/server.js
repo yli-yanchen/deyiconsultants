@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const signupRoute = require("./routes/signupRoute");
 const loginRoute = require("./routes/loginRoute");
@@ -15,9 +18,8 @@ app.use(express.static(path.resolve(__dirname, "../build")));
 app.use(cors());
 
 
-const CONNECTION_URL =
-  "mongodb+srv://yliyanchen:Liyi19961013@cluster0.1oawmot.mongodb.net/?retryWrites=true&w=majority";
-const PORT = 3000;
+const CONNECTION_URL = process.env.MONGOOSE_URL;
+const PORT = process.env.SERVE_PORT;
 
 mongoose
   .connect(CONNECTION_URL, { dbName: "test" })
