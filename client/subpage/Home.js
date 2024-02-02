@@ -3,7 +3,7 @@ import MovingComponent from "react-moving-text";
 
 const Home = () => {
   return (
-    <div className="MainContainer">
+    <div className="text-">
       <MovingComponent
         type="unfold"
         duration="4000ms"
