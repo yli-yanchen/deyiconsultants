@@ -10,7 +10,6 @@ console.log(
   `>>> Checking properties from '.env' file: \n  >>> SALT_FACTOR: ${SALT_FACTOR}`
 );
 
-
 const userSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },

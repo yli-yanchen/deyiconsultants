@@ -10,3 +10,4 @@ The features we will build in:
 
 4) Schedule a meeting - 30 minutes - send invitation
 
+5) Customer level - loyalty customer (special label)
