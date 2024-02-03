@@ -7,13 +7,13 @@ const Navigation = () => {
   const [menu, setMenu] = useState("");
 
   return (
-    <div className="navContainer">
+    <div className="navContainer flex flex-row space-between itmes-center h-16 px-10 pt-8 pb-8">
       <a href="/">
-        <img className="logo" src={logo} alt="DEYI Logo" />
+        <img className="logo flex w-auto h-16 object-contain" src={logo} alt="DEYI Logo" />
       </a>
 
-      <ul className="navbar">
-        <li className="navitem" onClick={() => setMenu("ABOUT")}>
+      <ul className="navbar bg-priwhite flex items-center gap-12 h-16">
+        <li class="navitem" onClick={() => setMenu("ABOUT")}>
           <Link style={{ textDecoration: "none" }} to={"/about"}>
             ABOUT{menu === "ABOUT" ? <hr /> : <></>}
           </Link>

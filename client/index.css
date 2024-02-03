@@ -1,5 +1,9 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+@layer components {
+    .navitem {
+        @apply block text-priblue text-right no-underline font-bold leading-10 pr-4 items-center text-15pt;
+    }
+}

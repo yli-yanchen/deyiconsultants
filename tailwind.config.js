@@ -33,3 +33,6 @@ module.exports = {
   },
   plugins: [require("tailwindcss"), require("autoprefixer")],
 };
+
+
+// command to run build: deyiconsultants % npx tailwindcss -i ./client/index.css -o ./build/output.css --watch

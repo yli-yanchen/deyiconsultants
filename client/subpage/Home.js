@@ -3,7 +3,8 @@ import MovingComponent from "react-moving-text";
 
 const Home = () => {
   return (
-    <div className="text-">
+    <div className="MainContainer overflow-hidden flex flex-col items-center justify-center h-50vw bg-cover bg-center bg-no-repeat" 
+         style={{backgroundImage: "url('../../docs/assets/images/homepagePicNoText.png')"}}>
       <MovingComponent
         type="unfold"
         duration="4000ms"
