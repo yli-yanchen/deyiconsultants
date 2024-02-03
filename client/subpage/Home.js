@@ -1,6 +1,8 @@
 import React from "react";
 import MovingComponent from "react-moving-text";
 
+import "../../build/output.css";
+
 const Home = () => {
   return (
     <div className="MainContainer overflow-hidden flex flex-col items-center justify-center h-50vw bg-cover bg-center bg-no-repeat" 

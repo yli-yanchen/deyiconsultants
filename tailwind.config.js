@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: "jit",
+  // mode: "jit",
   content: ["./client/**/*.js", "./client/**/*.jsx", "./**/*.html"],
-  purge: [],
+  // purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
@@ -31,8 +31,5 @@ module.exports = {
       }
     },
   },
-  plugins: [require("tailwindcss"), require("autoprefixer")],
+  // plugins: [require("tailwindcss"), require("autoprefixer")],
 };
-
-
-// command to run build: deyiconsultants % npx tailwindcss -i ./client/index.css -o ./build/output.css --watch

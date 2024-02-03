@@ -1,13 +1,14 @@
 import React from "react";
 import aboutimg from "../../docs/assets/images/about1.jpg";
-// import "../stylesheets/aboutstyles.css";
+
+import "../../build/output.css"
 
 const About = () => {
   return (
     <div className="AboutContainer">
       {/* <img className="aboutimg" src={aboutimg} alt="About Image"></img> */}
       <div className="abouttext">
-        <h1 className="abouth1"> Welcome to DEYI Consultant!</h1>
+        <h1 className="abouth1 bg-priblue"> Welcome to DEYI Consultant!</h1>
         <p className="aboutp">
           Welcome to DEYI, where structural engineering meets elegance.
           Established in 2023, we take pride in offering top-notch structural
