@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <div
-      className="homeContainer h-screen w-50 flex flex-col items-center justify-center"
+      className="h-screen w-50 flex flex-col items-center justify-center"
       style={{
         backgroundImage: `url(${homeImage})`,
         backgroundSize: "cover",
@@ -22,7 +22,7 @@ const Home = () => {
         timing="ease"
         iteration="1"
         fillMode="none"
-        className="homeh1 flex items-center pr-5 pb-10 font-extrabold text-4xl text-priblue"
+        className="flex items-center pr-5 pb-10 font-extrabold text-4xl mb-2.5 text-priblue"
         // style={{
         //   top: "50%",
         //   left: "50%",
@@ -32,8 +32,8 @@ const Home = () => {
         BUILD WITH CONFIDENCE
       </MovingComponent>
 
-      <div className="underline flex justify-center border-spacing-x-10 w-2 h=1/4 rounded-lg bg-priwhite"></div>
-   
+      <div className="flex justify-center w-72 h-2 text-5xl mb-2.5 mt-2.5 rounded-lg bg-priwhite"></div>
+
       <MovingComponent
         type="unfold"
         duration="5000ms"
@@ -42,7 +42,7 @@ const Home = () => {
         timing="ease"
         iteration="1"
         fillMode="none"
-        className="homeh3 flex items-center text-1xl text-priblue"
+        className="flex items-center text-1xl mt-2.5 text-priblue"
       >
         Ensure Your Project Stand Strong And Secure
       </MovingComponent>

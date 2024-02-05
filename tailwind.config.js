@@ -4,7 +4,7 @@ module.exports = {
   // mode: "jit",
   content: ["./client/**/*.js", "./client/**/*.jsx", "./**/*.html"],
   // purge: [],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: "media", // or 'media' or 'class'
   theme: {
     screens: {
       sm: "640px",
@@ -28,8 +28,8 @@ module.exports = {
   variants: {
     extend: {
       fontFamily: {
-        display: 'Barlow Semi Condensed',
-      }
+        display: "Barlow Semi Condensed",
+      },
     },
   },
   // plugins: [require("tailwindcss"), require("autoprefixer")],

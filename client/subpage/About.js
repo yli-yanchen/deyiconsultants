@@ -31,55 +31,23 @@ const About = () => {
         backgroundColor: "rgba(255, 255, 255, 0.05)",
       }}
     >
-      {/* <div
-        className="W-40 overflow-hidden bg-priwhite -insert-0.5 shadow-secwhite bg-opacity-40 box-border"
-        style={{
-          top: "50%",
-          left: "10%",
-        }}
-      >
-        <TransitionGroup className="flex transition-transform duration-500 ease-in-out">
-          <CSSTransition
-            key={imageIndex}
-            classNames={{
-              appear: "my-appear",
-              appearActive: "my-active-appear",
-              appearDone: "my-done-appear",
-              enter: "my-enter",
-              enterActive: "my-active-enter",
-              enterDone: "my-done-enter",
-              exit: "my-exit",
-              exitActive: "my-active-exit",
-              exitDone: "my-done-exit",
-            }}
-            timeout={3000}
-          >
-            <img
-              className="W-30 transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${imageIndex * 100}%)` }}
-              src={aboutImages[imageIndex]}
-              alt={`Image ${imageIndex + 1}`}
-            />
-          </CSSTransition>
-        </TransitionGroup>
-      </div> */}
-      <div className="w-800 m-auto py-16 px-4 relative">
+
+      <div className="w-800 m-auto py-16 px-4 relative group">
         <div
           className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
           style={{ backgroundImage: `${aboutImage1}` }}
         ></div>
 
-        <div className="absolute top-[50%] -translate-x-0 tranlate-y-[-50%] left-5 text-2xl rounded-full">
+        <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
           <BsChevronCompactLeft />
         </div>
 
         <div>
-          <BsChevronCompactRight />
+          <BsChevronCompactRight className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer" />
         </div>
       </div>
 
-      {/* https://www.youtube.com/watch?v=tXlZCW26bto */}
-      
+
       <div>
         <h1 className="flex flex-center items-center text-priblue text-3xl font-extrabold">
           Welcome to DEYI Consultant!
