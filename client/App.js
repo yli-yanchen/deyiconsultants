@@ -16,7 +16,6 @@ import Signup from "./subpage/Signup.js";
 const App = () => {
     return (
       <div className="h-screen overflow-hidden">
-        <React.StrictMode>
           <Router>
             <Navigation />
             <Routes>
@@ -29,7 +28,6 @@ const App = () => {
               <Route path="/signup" element={<Signup />} />
             </Routes>
           </Router>
-        </React.StrictMode>
       </div>
     );
 }

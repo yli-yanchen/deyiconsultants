@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../stylesheets/loginstyles.css";
+import homeImage from "../../docs/assets/images/homepagePicNoText.png";
+// import "../stylesheets/loginstyles.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -43,11 +44,19 @@ const Signup = () => {
   };
 
   return (
-    <form className="SignupContainer">
-      <div>
-        <h3 className="SignupTitle"> Welcome to DEYI! </h3>
-        <div className="underline"></div>
-        <br />
+    <form
+      className="h-screen w-50 flex flex-col items-center justify-center"
+      style={{
+        backgroundImage: `url(${homeImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="flex flex-col items-center justify-center">
+        <h3 className="-mt-20 mb-2.5 gap-2 text-priblue font-extrabold text-5xl">
+          Welcome to DEYI!
+        </h3>
+        <div className="w-72 h-2 text-5xl mb-2.5 mt-2.5 rounded-lg bg-priwhite"></div>
       </div>
 
       <input
@@ -89,14 +98,21 @@ const Signup = () => {
       />
       {/* <label className="errorLabel">{userError.passwordError}</label> */}
 
-      <div className="forgot-password">
-        Already Have Account? <span onClick={clicktoLogin}>Click Here!</span>
-      </div>
-
-      <div className="signup-submit-container">
-        <button type="button" className={"submit"} onClick={handleSubmit}>
+      <div className="flex items-center m-2">
+        <button
+          type="button"
+          className={"submitBtnBlue"}
+          onClick={handleSubmit}
+        >
           Sign Up
         </button>
+      </div>
+
+      <div className="mt-2 mb-4 text-priblue text-sm items-center">
+        Already Have Account?
+        <span className="text-priwhite cursor-pointer" onClick={clicktoLogin}>
+          Click Here!
+        </span>
       </div>
     </form>
   );

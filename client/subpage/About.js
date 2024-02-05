@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BsChevronCompactLeft, BsChevronCompactRight} from "react-icons/bs";
+import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
@@ -31,22 +31,20 @@ const About = () => {
         backgroundColor: "rgba(255, 255, 255, 0.05)",
       }}
     >
-
       <div className="w-800 m-auto py-16 px-4 relative group">
         <div
-          className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
-          style={{ backgroundImage: `${aboutImage1}` }}
+          className="rounded-2xl bg-center bg-cover duration-500"
+          style={{ backgroundImage: `url(${aboutImage1})` }}
         ></div>
 
         <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-          <BsChevronCompactLeft />
+          <BsChevronCompactLeft size={30} />
         </div>
 
-        <div>
-          <BsChevronCompactRight className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer" />
+        <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+          <BsChevronCompactRight size={30} />
         </div>
       </div>
-
 
       <div>
         <h1 className="flex flex-center items-center text-priblue text-3xl font-extrabold">
