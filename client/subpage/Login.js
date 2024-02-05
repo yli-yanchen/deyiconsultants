@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import useAuth from "../hook/useAuth";
 
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 
@@ -11,6 +12,9 @@ const Login = () => {
 
   const emailRef = useRef();
   const passwordRef = useRef();
+  const { setAuth } = useAuth();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [res, setRes] = useState(null);
   const [err, setErr] = useState(null);
@@ -18,14 +22,33 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(">>> current email from user input: ", emailRef.current.value);
-    const loginres = await axios.post("/login", {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    });
-    if (loginres) {
-      navigate("/about");
-    } else {
+    try {
+      const loginres = await axios.post("/login", {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      });
+      // console.log(">>> this is from loginres: ", JSON.stringify(loginres?.data)));
+      if (loginres) {
+        // const accessToken = loginres?.data?.accessTokens;
+        // const roles = response?.data?.roles;
+        // setAuth({user, pwd, rols, accessToken});
+        // setUser("");
+        // setPassword("");
+        navigate(from, { replace: true }); // go back from where you come.
+      }
+    } catch (err) {
       console.log("Incorrect email or password!");
+      /* 
+      if (!err.response) {
+        setErrorMessage("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrorMessage("Missing Email or Password");
+      } else if (err.response?.status === 401) {
+        setErrorMessage("Unauthorized");
+      } else {
+        setErrorMessage("Login Failed");
+      }
+      */
     }
   };
 
@@ -37,7 +60,7 @@ const Login = () => {
   const forgotPassword = (e) => {
     e.preventDefault();
     console.log("I forgot the password");
-  }
+  };
 
   const onSuccess = async (res) => {
     console.log("Login Success! Response: ", res);
