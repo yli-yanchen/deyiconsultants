@@ -7,12 +7,16 @@ const Navigation = () => {
   const [menu, setMenu] = useState("");
 
   return (
-    <div className="navContainer flex flex-row space-between itmes-center h-16 px-10 pt-8 pb-8">
+    <div className="container relative flex flex-row justify-center items-center p-3">
       <a href="/">
-        <img className="logo flex w-auto h-16 object-contain" src={logo} alt="DEYI Logo" />
+        <img
+          className="logo h-28 w-auto p-3"
+          src={logo}
+          alt="DEYI Logo"
+        />
       </a>
 
-      <ul className="navbar bg-priwhite flex items-center gap-12 h-16">
+      <ul className="navbar flex flex-row w-50 pl-80 pr-2 items-center text-center">
         <li class="navitem" onClick={() => setMenu("ABOUT")}>
           <Link style={{ textDecoration: "none" }} to={"/about"}>
             ABOUT{menu === "ABOUT" ? <hr /> : <></>}
@@ -40,7 +44,7 @@ const Navigation = () => {
         </li>
       </ul>
 
-      <div className="searchIconContainer">
+      <div className="searchIconContainer pl-0 pr-2">
         <LiaSearchSolid className="searchIcon" />
       </div>
     </div>

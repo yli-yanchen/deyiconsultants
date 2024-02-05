@@ -4,6 +4,6 @@
 
 @layer components {
     .navitem {
-        @apply block text-priblue text-right no-underline font-bold leading-10 pr-4 items-center;
+        @apply block text-priblue text-right no-underline font-bold leading-10 pr-8 items-center align-middle;
     }
 }

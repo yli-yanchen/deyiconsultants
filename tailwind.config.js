@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   // mode: "jit",
   content: ["./client/**/*.js", "./client/**/*.jsx", "./**/*.html"],
