@@ -22,7 +22,7 @@ const Home = () => {
         timing="ease"
         iteration="1"
         fillMode="none"
-        className="homeh1 flex items-center pr-5 font-extrabold text-4xl text-priblue"
+        className="homeh1 flex items-center pr-5 pb-10 font-extrabold text-4xl text-priblue"
         // style={{
         //   top: "50%",
         //   left: "50%",
@@ -31,8 +31,9 @@ const Home = () => {
       >
         BUILD WITH CONFIDENCE
       </MovingComponent>
+
       <div className="underline flex justify-center border-spacing-x-10 w-2 h=1/4 rounded-lg bg-priwhite"></div>
-      <br />
+   
       <MovingComponent
         type="unfold"
         duration="5000ms"
