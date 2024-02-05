@@ -7,13 +7,17 @@ const Navigation = () => {
   const [menu, setMenu] = useState("");
 
   return (
-    <div className="navContainer">
+    <div className="container w-full relative flex flex-row justify-between items-center p-3">
       <a href="/">
-        <img className="logo" src={logo} alt="DEYI Logo" />
+        <img
+          className="logo h-28 w-90 p-3"
+          src={logo}
+          alt="DEYI Logo"
+        />
       </a>
 
-      <ul className="navbar">
-        <li className="navitem" onClick={() => setMenu("ABOUT")}>
+      <ul className="navbar flex flex-row pl-80 pr-2 items-center text-center">
+        <li class="navitem" onClick={() => setMenu("ABOUT")}>
           <Link style={{ textDecoration: "none" }} to={"/about"}>
             ABOUT{menu === "ABOUT" ? <hr /> : <></>}
           </Link>
@@ -39,10 +43,6 @@ const Navigation = () => {
           </Link>
         </li>
       </ul>
-
-      <div className="searchIconContainer">
-        <LiaSearchSolid className="searchIcon" />
-      </div>
     </div>
   );
 };

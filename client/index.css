@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .navitem {
+    @apply block text-priblue text-right no-underline font-bold leading-10 pr-8 items-center align-middle;
+  }
+
+  .inputBox {
+    @apply flex justify-center items-center m-0.5 w-80 h-10 indent-2 bg-priwhite text-base rounded-lg;
+  }
+
+  .submitBtnBlue {
+    @apply flex justify-center items-center m-2 w-80 h-10 rounded-lg text-priwhite bg-priblue text-base font-normal cursor-pointer;
+  }
+
+  .submitBtnWhite {
+    @apply flex justify-center items-center m-2 w-80 h-10 rounded-lg text-priblue bg-priwhite text-base font-normal cursor-pointer;
+  }
+}

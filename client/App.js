@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "./stylesheets/styles.css";
+import ".././client/index.css";
 
 import Navigation from "./components/Navigation.js";
 import Login from "./subpage/Login.js";
@@ -15,8 +15,7 @@ import Signup from "./subpage/Signup.js";
 
 const App = () => {
     return (
-      <div className="router">
-        <React.StrictMode>
+      <div className="h-screen overflow-hidden">
           <Router>
             <Navigation />
             <Routes>
@@ -29,7 +28,6 @@ const App = () => {
               <Route path="/signup" element={<Signup />} />
             </Routes>
           </Router>
-        </React.StrictMode>
       </div>
     );
 }
