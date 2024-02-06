@@ -16,17 +16,7 @@ import RequiredAuth from "./components/RequiredAuth.js";
 
 const App = () => {
   return (
-    <div className="h-screen overflow-hidden">
-      {/* <Navigation />
-      <Routes>
-        // <Route path="/" element={<Home />} />
-        // <Route path="/about" element={<About />} />
-        // <Route path="/project" element={<Project />} />
-        // <Route path="/expertice" element={<Expertice />} />
-        // <Route path="/contact" element={<Contact />} />
-        // <Route path="/login" element={<Login />} />
-        // <Route path="/signup" element={<Signup />} />
-      </Routes> */}
+    <main className="h-screen overflow-hidden">
       <Navigation />
       <Routes>
         <Route path="/">
@@ -47,7 +37,7 @@ const App = () => {
           </Route>
         </Route>
       </Routes>
-    </div>
+    </main>
   );
 };
 

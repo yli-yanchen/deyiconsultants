@@ -1,31 +1,40 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+import axios from "../hook/axios";
 import useAuth from "../hook/useAuth";
-
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 
 const Login = () => {
   const navigate = useNavigate();
   const clientID = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID;
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
   const { setAuth } = useAuth();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const [res, setRes] = useState(null);
+  const emailRef = useRef();
+  const errRef = useRef();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [err, setErr] = useState(null);
 
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    setErr("");
+  }, [email, password]);
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();  // prevent reload the page
     console.log(">>> current email from user input: ", emailRef.current.value);
+
     try {
       const loginres = await axios.post("/login", {
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
+        email: email,
+        password: password,
       });
       // console.log(">>> this is from loginres: ", JSON.stringify(loginres?.data)));
       if (loginres) {
@@ -78,6 +87,7 @@ const Login = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
+      onSubmit={handleSubmit}
     >
       <div className="flex flex-col items-center justify-center">
         <h3 className="-mt-20 mb-2.5 gap-2 text-priblue font-extrabold text-5xl">
@@ -88,17 +98,24 @@ const Login = () => {
 
       <input
         type="email"
-        placeholder="email"
+        id="email"
+        placeholder="Email"
         ref={emailRef}
+        onChange={(e) => setEmail(e.target.value)}
         className={"inputBox"}
+        value={email}
+        autoComplete="off"
+        required
       />
       {/* <label className="errorLabel">{userError.emailError}</label> */}
-      <br />
       <input
         type="password"
-        placeholder="password"
-        ref={passwordRef}
+        id="password"
+        placeholder="Password"
         className={"inputBox"}
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
+        required
       />
       {/* <label className="errorLabel">{userError.passwordError}</label> */}
 
@@ -118,7 +135,7 @@ const Login = () => {
           className="text-priwhite cursor-pointer indent-2"
           onClick={forgotPassword}
         >
-          Click Here!
+          <a href="/about">Click Here!</a>
         </span>
       </div>
 

@@ -8,7 +8,7 @@
   }
 
   .inputBox {
-    @apply flex justify-center items-center m-0.5 w-80 h-10 indent-2 bg-priwhite text-base rounded-lg;
+    @apply flex justify-center items-center m-4 w-80 h-10 indent-2 bg-priwhite text-base rounded-lg;
   }
 
   .submitBtnBlue {

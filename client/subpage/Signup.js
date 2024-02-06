@@ -68,7 +68,7 @@ const Signup = () => {
         className={"inputBox"}
       />
       {/* <label className="errorLabel">{userError.emailError}</label> */}
-      <br />
+
       <input
         type="text"
         name="lastName"
@@ -77,7 +77,7 @@ const Signup = () => {
         onChange={handleUserDataChange}
         className={"inputBox"}
       />
-      <br />
+
       <input
         type="email"
         name="email"
@@ -87,7 +87,7 @@ const Signup = () => {
         className={"inputBox"}
       />
       {/* <label className="errorLabel">{userError.emailError}</label> */}
-      <br />
+
       <input
         type="password"
         name="password"
