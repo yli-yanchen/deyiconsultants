@@ -38,10 +38,7 @@ loginController.verifyUser = async (req, res, next) => {
     const validPassword = await bcrypt.compare(password, foundUser.password);
 
     if (validPassword) {
-      console.log(">>> validpassword when verify is: ", validPassword);
-      res.locals.userid = foundUser._id.toString();
-      res.locals.correctUser = true;
-      console.log(">>> correct password for the user: ", validPassword);
+      res.locals.user = foundUser;
       return next()
     } else {
       console.log(">>> wrong password");

@@ -1,8 +1,15 @@
 const router = require("express").Router();
 const loginController = require("../controllers/loginController");
+const authControllers = require("../controllers/authController");
 
-router.post("/", loginController.verifyUser, (req, res) => {
-  return res.status(200).json(res.locals.correctUser);
-});
+router.post(
+  "/",
+  loginController.verifyUser,
+  authControllers.generateToken,
+  authControllers.verifyToken,
+  (req, res) => {
+    return res.status(200).json(res.locals.correctUser);
+  }
+);
 
 module.exports = router;
