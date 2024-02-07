@@ -2,6 +2,26 @@ const model = require("../models/userModel");
 
 const signupController = {};
 
+signupController.duplicateUser = async (req, res, next) => {
+  try {
+    const foundUser = await model.User.findOne({ email: req.body.email });
+    console.log(">>> returned from the user.findone(email): ", foundUser);
+    if (foundUser) {
+      return res
+        .status(400)
+        .send({ message: "already be a user, please log in." });
+    }
+    return next();
+  } catch (err) {
+    const duplicateUserError = {
+      log: "Express error handler caught duplicateUser.duplicateUser in try clock",
+      status: 401,
+      message: { err: "Error happens when there is duplicat user in db." },
+    };
+    return next(duplicateUserError);
+  }
+};
+
 signupController.createUser = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -13,16 +33,15 @@ signupController.createUser = async (req, res, next) => {
         email: email,
         password: password,
       });
-      console.log(">>> new User saved to database: ", newUser);
       const newUserinDB = await model.User.create(newUser);
-      res.locals.userid = newUserinDB._id;
+      res.locals.user = newUserinDB;
       console.log(">>> new User saved to database: ", newUserinDB);
       return next();
     }
   } catch (err) {
     const createUserDBError = {
       log: "Express error handler caught userController.createUser error",
-      status: 400,
+      status: 500,
       message: {
         err: "New user cannot be created in the database for some reason",
       },
@@ -30,6 +49,5 @@ signupController.createUser = async (req, res, next) => {
     return next(createUserDBError);
   }
 };
-
 
 module.exports = signupController;
