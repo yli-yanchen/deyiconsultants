@@ -33,7 +33,7 @@ const Signup = () => {
 
     try {
         const signupres = await axios.post("/signup/newuser", userData);
-        if (signupres) navigate("/about");
+        if (signupres) navigate("/profile");
         console.log(">>> Response got from axios.post('signup/newuser')", JSON.stringify(signupres));
     } catch (err) {
         console.log(

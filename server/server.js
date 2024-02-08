@@ -12,6 +12,7 @@ dotenv.config();
 
 const signupRoute = require("./routes/signupRoute");
 const loginRoute = require("./routes/loginRoute");
+const profileRoute = require("./routes/profileRoute");
 
 
 app.use(express.json());
@@ -42,6 +43,7 @@ mongoose
 
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
+app.use("/profile", profileRoute);
 
 
 app.get("/*", (req, res) => {
