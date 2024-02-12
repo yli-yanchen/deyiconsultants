@@ -49,45 +49,48 @@ module.exports = {
     compress: true,
     port: 8080,
     proxy: {
-      "/api": {
-        target: "http://localhost:3000",
-        // target: "http://localhost:3000/api",
-        // changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-      "/about": {
-        target: "http://localhost:3000",
-        // target: "http://localhost:3000/about",
-        // changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/about/, ""),
-      },
-      "/expertice": {
-        target: "http://localhost:3000",
-        // target: "http://localhost:3000/expertice",
-        // changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/expertice/, ""),
-      },
-      "/project": {
-        target: "http://localhost:3000",
-        // target: "http://localhost:3000/project",
-        // changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/project/, ""),
-      },
-      "/contact": {
-        target: "http://localhost:3000",
-        // target: "http://localhost:3000/contact",
-        // changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/contact/, ""),
-      },
-      "/login": {
-        target: "http://localhost:3000",
-        // target: "http://localhost:3000/login",
-        // changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/login/, ""),
-      },
-      "/signup": {
+      "/": {
         target: "http://localhost:3000",
       },
+      // "/api": {
+      //   target: "http://localhost:3000",
+      //   // target: "http://localhost:3000/api",
+      //   // changeOrigin: true,
+      //   // rewrite: (path) => path.replace(/^\/api/, ""),
+      // },
+      // "/about": {
+      //   target: "http://localhost:3000",
+      //   // target: "http://localhost:3000/about",
+      //   // changeOrigin: true,
+      //   // rewrite: (path) => path.replace(/^\/about/, ""),
+      // },
+      // "/expertice": {
+      //   target: "http://localhost:3000",
+      //   // target: "http://localhost:3000/expertice",
+      //   // changeOrigin: true,
+      //   // rewrite: (path) => path.replace(/^\/expertice/, ""),
+      // },
+      // "/project": {
+      //   target: "http://localhost:3000",
+      //   // target: "http://localhost:3000/project",
+      //   // changeOrigin: true,
+      //   // rewrite: (path) => path.replace(/^\/project/, ""),
+      // },
+      // "/contact": {
+      //   target: "http://localhost:3000",
+      //   // target: "http://localhost:3000/contact",
+      //   // changeOrigin: true,
+      //   // rewrite: (path) => path.replace(/^\/contact/, ""),
+      // },
+      // "/login": {
+      //   target: "http://localhost:3000",
+      //   // target: "http://localhost:3000/login",
+      //   // changeOrigin: true,
+      //   // rewrite: (path) => path.replace(/^\/login/, ""),
+      // },
+      // "/signup": {
+      //   target: "http://localhost:3000",
+      // },
     },
   },
   resolve: {
