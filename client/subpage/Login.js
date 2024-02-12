@@ -36,17 +36,26 @@ const Login = () => {
         email: email,
         password: password,
       });
-      // console.log(">>> this is from loginres: ", JSON.stringify(loginres?.data)));
+      console.log(">>> this is from loginres: ", loginres?.data);
+      
       if (loginres) {
-        // const accessToken = loginres?.data?.accessTokens;
-        // const roles = response?.data?.roles;
-        // setAuth({user, pwd, rols, accessToken});
+        const accessToken = loginres?.data?.accessTokens;
+        const role = loginres?.data?.role;
+        const userid = loginres?.data?._id.toString();
+
+        console.log(">>> current accessToken: ", accessToken);
+        console.log(">>> current role: ", role);
+        console.log(">>> current userid: ", userid);
+
+        setAuth({ email, password, role, accessToken });
         // setUser("");
         // setPassword("");
-        navigate(from, { replace: true }); // go back from where you come.
+        console.log(">>> ready to navigate toe profile page")
+        navigate(`/basic/${userid}`);
+        // navigate(from, { replace: true }); // go back from where you come.
       }
     } catch (err) {
-      console.log("Incorrect email or password!");
+      console.log("error in login hundblesubmit() components");
       /* 
       if (!err.response) {
         setErrorMessage("No Server Response");

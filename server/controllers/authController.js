@@ -10,12 +10,13 @@ authControllers.generateToken = (req, res, next) => {
       {
         userid: res.locals.user._id.toString(),
         email: res.locals.user.email,
+        role: res.locals.user.role,
       },
       process.env.TOKEN_SECRET,
       {
         algorithm: "HS256",
         allowInsecureKeySizes: true,
-        expiresIn: "3600s",
+        expiresIn: "5s",
         // 86400,
       }
     );
@@ -48,7 +49,6 @@ authControllers.verifyToken = (req, res, next) => {
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, decoded) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
-          res.locals.credential = false;
           return res.redirect("/login");
         } else {
           return next(
@@ -63,15 +63,26 @@ authControllers.verifyToken = (req, res, next) => {
       const currentUser = await model.User.findOne({ email: decoded.email });
       if (currentUser) {
         res.locals.user = currentUser;
+        res.locals.user.accessToken = token;
         console.log(">>> current user: ", res.locals.user);
       } else {
         return next("User not found in the db.");
       }
 
       req.userID = decoded.id;
-      res.locals.credential = true;
       return next();
     });
+  } catch (err) {
+    return next("Error in authControllers.verifyToken: " + JSON.stringify(err));
+  }
+};
+
+authControllers.refreshToken = (req, res, next) => {
+  try {
+    const refreshToken = req.body.token;
+    if (!refreshToken) {
+      return res.status(401).send({ message: "You are not authenticated." });
+    }
   } catch (err) {
     return next("Error in authControllers.verifyToken: " + JSON.stringify(err));
   }

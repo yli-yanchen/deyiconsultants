@@ -35,7 +35,6 @@ signupController.createUser = async (req, res, next) => {
       });
       const newUserinDB = await model.User.create(newUser);
       res.locals.user = newUserinDB;
-      console.log(">>> new User saved to database: ", newUserinDB);
       return next();
     }
   } catch (err) {

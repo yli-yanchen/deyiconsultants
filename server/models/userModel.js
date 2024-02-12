@@ -20,7 +20,8 @@ const userSchema = new Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: [ROLE.ADMIN, ROLE.BASIC], default: ROLE.BASIC }, 
+  role: { type: String, enum: [ROLE.ADMIN, ROLE.BASIC], default: ROLE.BASIC },
+  accessToken: { type: String },
   projectid: { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
 });
 
