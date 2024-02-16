@@ -63,7 +63,6 @@ authControllers.verifyToken = (req, res, next) => {
       const currentUser = await model.User.findOne({ email: decoded.email });
       if (currentUser) {
         res.locals.user = currentUser;
-        res.locals.user.accessToken = token;
         console.log(">>> current user: ", res.locals.user);
       } else {
         return next("User not found in the db.");
@@ -79,10 +78,31 @@ authControllers.verifyToken = (req, res, next) => {
 
 authControllers.refreshToken = (req, res, next) => {
   try {
-    const refreshToken = req.body.token;
-    if (!refreshToken) {
-      return res.status(401).send({ message: "You are not authenticated." });
-    }
+    const cookies = req.cookies
+    if (!cookies?.refreshToken) return res.status(401).json({message: "Unauthorized"});
+
+    const refreshToken = jwt.sign(
+      {
+        userid: res.locals.user._id.toString(),
+        email: res.locals.user.email,
+        role: res.locals.user.role,
+      },
+      process.env.REFRESH_TOKEN,
+      {
+        algorithm: "HS256",
+        allowInsecureKeySizes: true,
+        expiresIn: "1d",
+      }
+    );
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 7*24*60*60*1000
+    })
+
+    res.locals.user.accessToken = accessToken;
   } catch (err) {
     return next("Error in authControllers.verifyToken: " + JSON.stringify(err));
   }

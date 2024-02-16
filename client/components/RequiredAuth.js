@@ -7,14 +7,6 @@ const RequiredAuth = ({ allowedRole }) => {
   const location = useLocation();
 
   console.log(">>> current Auth: ", auth);
-//   return auth?.role && auth.role.find((role) => allowedRole?.includes(role)) ? (
-//     <Outlet /> // Render child components if the user has required role
-//   ) : auth?.email ? (
-//     <Navigate to="/unauthorized" state={{ from: location }} replace /> // change to unauthorized page
-//   ) : (
-//     <Navigate to="/login" state={{ from: location }} replace />
-//   );
-// };
 
   if (!auth || !auth.role) {
     // Handle case where auth or auth.role is undefined
