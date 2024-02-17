@@ -13,13 +13,17 @@ dotenv.config();
 const signupRoute = require("./routes/signupRoute");
 const loginRoute = require("./routes/loginRoute");
 const profileRoute = require("./routes/profileRoute");
-
-
+const authControllers = require("./controllers/authController");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, "../build")));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:8080",
+    credentials: true,
+  })
+);
 
 // app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*"); // Allow requests from any origin
@@ -47,19 +51,24 @@ mongoose
   .then(() =>
     app.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
   )
-  .catch((error) => console.log("error from mongoose connection", error.message));
-
+  .catch((error) =>
+    console.log("error from mongoose connection", error.message)
+  );
 
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
 app.use("/profile", profileRoute);
 
-
-app.get("/*", (req, res) => {
-  return res.status(200).sendFile(path.resolve(__dirname, "client", "./index.html"));
-  // return res.status(200);
+app.get("/auth", authControllers.verifyToken, (req, res) => {
+  res.status(200).json(res.locals.user);
 });
 
+app.get("/*", (req, res) => {
+  return res
+    .status(200)
+    .sendFile(path.resolve(__dirname, "client", "./index.html"));
+  // return res.status(200);
+});
 
 // catch all route for any unknown routes
 app.use("*", (req, res) => {

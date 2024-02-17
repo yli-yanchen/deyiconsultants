@@ -49,11 +49,11 @@ const App = () => {
         </Route>
 
         <Route element={<RequiredAuth allowedRole={[ROLE.BASIC]} />}>
-          <Route path="/basic/:id" element={<Profile />} />
+          <Route path="profile/basic/:id" element={<Profile />} />
         </Route>
 
         <Route element={<RequiredAuth allowedRole={[ROLE.ADMIN]} />}>
-          <Route path="/admin/:id" element={<Profile />} />
+          <Route path="profile/admin/:id" element={<Profile />} />
         </Route>
       </Routes>
     </main>

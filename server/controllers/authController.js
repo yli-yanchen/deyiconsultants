@@ -4,9 +4,9 @@ require("dotenv").config();
 
 const authControllers = {};
 
-authControllers.generateToken = (req, res, next) => {
+authControllers.generateToken = async (req, res, next) => {
   try {
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
       {
         userid: res.locals.user._id.toString(),
         email: res.locals.user.email,
@@ -15,13 +15,46 @@ authControllers.generateToken = (req, res, next) => {
       process.env.TOKEN_SECRET,
       {
         algorithm: "HS256",
-        allowInsecureKeySizes: true,
         expiresIn: "5s",
-        // 86400,
       }
     );
-    req.session.token = token;
-    res.cookie("token", token);
+
+    const refreshToken = jwt.sign(
+      {
+        userid: res.locals.user._id.toString(),
+        email: res.locals.user.email,
+        role: res.locals.user.role,
+      },
+      process.env.REFRESH_TOKEN,
+      {
+        algorithm: "HS256",
+        expiresIn: "1d",
+      }
+    );
+
+    res.cookie("accessToken", accessToken, { maxAge: 60000 });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    const updateUserwithAccessToken = await model.User.findOneAndUpdate(
+      { email: res.locals.user.email },
+      {
+        $set: {
+          accessToken: accessToken.toString(),
+          refreshToken: refreshToken.toString(),
+        },
+      },
+      { new: true }
+    );
+    res.locals.user = updateUserwithAccessToken;
+    console.log(
+      ">>> res.locals.user after update user accesstion: ",
+      updateUserwithAccessToken
+    );
     return next();
   } catch (err) {
     return next(
@@ -32,23 +65,27 @@ authControllers.generateToken = (req, res, next) => {
 
 authControllers.verifyToken = (req, res, next) => {
   try {
-    let token = req.session.token;
-    console.log(">>> token in authControllers.verifyToken: ", token);
+    console.log(
+      ">>> token in authControllers.verifyToken.",
+      req.cookies.accessToken
+    );
+    let accessToken = req.cookies.accessToken;
 
     // if there is no tolen for current user
-    if (!token) {
+    if (!accessToken) {
       const notoken = {
         log: "Express error handler caught authControllers.verifyToken error",
-        status: 400,
+        status: 401,
         message: { err: "No Token Found" },
       };
       return next(notoken);
     }
 
     // if there is token then verify its token
-    jwt.verify(token, process.env.TOKEN_SECRET, async (err, decoded) => {
+    jwt.verify(accessToken, process.env.TOKEN_SECRET, async (err, decoded) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
+          res.clearCookie("accessToken");
           return res.redirect("/login");
         } else {
           return next(
@@ -60,14 +97,31 @@ authControllers.verifyToken = (req, res, next) => {
 
       console.log("decoded content in jwt.verify: ", decoded);
 
-      const currentUser = await model.User.findOne({ email: decoded.email });
-      if (currentUser) {
-        res.locals.user = currentUser;
-        res.locals.user.accessToken = token;
-        console.log(">>> current user: ", res.locals.user);
-      } else {
-        return next("User not found in the db.");
+      // verify the refresh token, if expire, then reassign.
+      const refreshToken = req.cookies.refreshToken;
+      if (!refreshToken)
+        return res.status(401).json({ message: "Unauthorized" });
+      else {
+        jwt.sign(
+          {
+            userid: res.locals.user._id.toString(),
+            email: res.locals.user.email,
+            role: res.locals.user.role,
+          },
+          process.env.REFRESH_TOKEN,
+          {
+            algorithm: "HS256",
+            expiresIn: "1d",
+          }
+        );
       }
+
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
 
       req.userID = decoded.id;
       return next();
@@ -77,15 +131,5 @@ authControllers.verifyToken = (req, res, next) => {
   }
 };
 
-authControllers.refreshToken = (req, res, next) => {
-  try {
-    const refreshToken = req.body.token;
-    if (!refreshToken) {
-      return res.status(401).send({ message: "You are not authenticated." });
-    }
-  } catch (err) {
-    return next("Error in authControllers.verifyToken: " + JSON.stringify(err));
-  }
-};
 
 module.exports = authControllers;
