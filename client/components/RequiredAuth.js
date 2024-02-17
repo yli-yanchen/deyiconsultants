@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hook/useAuth";
+import axios from "../hook/axios";
 
 const RequiredAuth = ({ allowedRole }) => {
   const { auth } = useAuth();
   const location = useLocation();
+  const [loggedIn, setLoggedIn] = useState(false);
 
   console.log(">>> current Auth: ", auth);
 
-  if (!auth || !auth.role) {
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const authorizedUser = await axios.get("/auth", {
+          withCredentials: true,
+        }, (req, res) => {
+           res.set("Access-Control-Allow-Origin", "http://localhost:8080");
+        });
+        if (authorizedUser) setLoggedIn(true);
+      } catch (error) {
+        console.log("Error authorizing user: ", error);
+      }
+    };
+    verifyToken();
+  }, []);
+
+  if (!auth || !loggedIn || !auth.role) {
     // Handle case where auth or auth.role is undefined
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
@@ -18,6 +36,6 @@ const RequiredAuth = ({ allowedRole }) => {
   ) : (
     <Navigate to="/unauthorized" state={{ from: location }} replace /> // change to unauthorized page
   );
-}
+};
 
 export default RequiredAuth;

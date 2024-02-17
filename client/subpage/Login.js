@@ -37,26 +37,25 @@ const Login = () => {
         password: password,
       });
       console.log(">>> this is from loginres: ", loginres?.data);
-      
+
       if (loginres) {
-        const accessToken = loginres?.data?.accessTokens;
         const role = loginres?.data?.role;
         const userid = loginres?.data?._id.toString();
 
-        console.log(">>> current accessToken: ", accessToken);
         console.log(">>> current role: ", role);
         console.log(">>> current userid: ", userid);
 
-        setAuth({ email, password, role, accessToken });
+        setAuth({ email, password, role });
         // setUser("");
         // setPassword("");
         console.log(">>> ready to navigate toe profile page")
-        navigate(`/basic/${userid}`);
+        const trimmedUserID = userid.substring(0, 6);
+        navigate(`/profile/${role}/${trimmedUserID}`);
         // navigate(from, { replace: true }); // go back from where you come.
       }
     } catch (err) {
       console.log("error in login hundblesubmit() components");
-      /* 
+      /*
       if (!err.response) {
         setErrorMessage("No Server Response");
       } else if (err.response?.status === 400) {
