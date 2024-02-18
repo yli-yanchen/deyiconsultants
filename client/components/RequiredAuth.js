@@ -20,6 +20,7 @@ const RequiredAuth = ({ allowedRole }) => {
         });
         if (authorizedUser) setLoggedIn(true);
       } catch (error) {
+        setLoggedIn(false);
         console.log("Error authorizing user: ", error);
       }
     };

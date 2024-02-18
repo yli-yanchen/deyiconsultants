@@ -37,7 +37,7 @@ const Login = () => {
         password: password,
       });
       console.log(">>> this is from loginres: ", loginres?.data);
-
+      
       if (loginres) {
         const role = loginres?.data?.role;
         const userid = loginres?.data?._id.toString();
@@ -45,9 +45,10 @@ const Login = () => {
         console.log(">>> current role: ", role);
         console.log(">>> current userid: ", userid);
 
-        setAuth({ email, password, role });
+        await setAuth({ email, password, role });
         // setUser("");
         // setPassword("");
+        // req.cookie("accessToken", loginres?.data?.accessToken)
         console.log(">>> ready to navigate toe profile page")
         const trimmedUserID = userid.substring(0, 6);
         navigate(`/profile/${role}/${trimmedUserID}`);

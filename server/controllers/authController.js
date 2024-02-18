@@ -40,6 +40,8 @@ authControllers.generateToken = async (req, res, next) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
+    console.log(">>> before updated user in db.");
+
     const updateUserwithAccessToken = await model.User.findOneAndUpdate(
       { email: res.locals.user.email },
       {
@@ -50,11 +52,9 @@ authControllers.generateToken = async (req, res, next) => {
       },
       { new: true }
     );
+    console.log(">>> res.locals.user after update user accesstion: ", updateUserwithAccessToken);
     res.locals.user = updateUserwithAccessToken;
-    console.log(
-      ">>> res.locals.user after update user accesstion: ",
-      updateUserwithAccessToken
-    );
+
     return next();
   } catch (err) {
     return next(
@@ -130,6 +130,5 @@ authControllers.verifyToken = (req, res, next) => {
     return next("Error in authControllers.verifyToken: " + JSON.stringify(err));
   }
 };
-
 
 module.exports = authControllers;

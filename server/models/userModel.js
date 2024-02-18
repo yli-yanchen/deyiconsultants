@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
-// const Project = require("./projectModel");
+const Project = require("./projectModel");
 dotenv.config();
 
 const SALT_FACTOR = Number(process.env.SALT_FACTOR);
@@ -16,7 +16,7 @@ const ROLE = {
 }
 
 const tokenSchema = new Schema({
-  refreshToken: String,
+  refreshToken: { String },
   expireDate: {
     type: Date,
     default: function () {
@@ -36,7 +36,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   role: { type: String, enum: [ROLE.ADMIN, ROLE.BASIC], default: ROLE.BASIC },
   accessToken: { type: String },
-  refreshToken: tokenSchema,
+  refreshToken: { type: tokenSchema },
   projectid: { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
 });
 
