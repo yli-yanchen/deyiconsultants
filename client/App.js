@@ -48,11 +48,11 @@ const App = () => {
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Route>
 
-        <Route element={<RequiredAuth allowedRole={[ROLE.BASIC]} />}>
+        <Route element={<RequiredAuth />}>
           <Route path="profile/basic/:id" element={<Profile />} />
         </Route>
 
-        <Route element={<RequiredAuth allowedRole={[ROLE.ADMIN]} />}>
+        <Route element={<RequiredAuth />}>
           <Route path="profile/admin/:id" element={<Profile />} />
         </Route>
       </Routes>

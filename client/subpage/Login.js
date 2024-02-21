@@ -18,6 +18,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(null);
+  const [isLogged, setIsLogged] = useState(false);
+  const [userid, setUserID] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     emailRef.current.focus();
@@ -27,46 +30,39 @@ const Login = () => {
     setErr("");
   }, [email, password]);
 
+  useEffect(() => {
+    if (isLogged) {
+      setAuth({ userid, userRole });
+      navigate(`/profile/${userRole}/${userid}`);
+    }
+    console.log(">>> loginnnnnnnnnnn");
+  }, [isLogged, navigate, userRole, userid]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();  // prevent reload the page
     console.log(">>> current email from user input: ", emailRef.current.value);
 
     try {
-      const loginres = await axios.post("/login", {
+      const loginres = await axios.post("/api/login", {
         email: email,
         password: password,
       });
       console.log(">>> this is from loginres: ", loginres?.data);
       
-      if (loginres) {
-        const role = loginres?.data?.role;
+      if (loginres && loginres.data) {
         const userid = loginres?.data?._id.toString();
-
-        console.log(">>> current role: ", role);
-        console.log(">>> current userid: ", userid);
-
-        await setAuth({ email, password, role });
-        // setUser("");
-        // setPassword("");
-        // req.cookie("accessToken", loginres?.data?.accessToken)
-        console.log(">>> ready to navigate toe profile page")
         const trimmedUserID = userid.substring(0, 6);
-        navigate(`/profile/${role}/${trimmedUserID}`);
+        const role = loginres?.data.role;
+        setIsLogged(true);
+        setUserID(trimmedUserID);
+        setUserRole(role);
+        console.log(">>> ready to navigate toe profile page")
         // navigate(from, { replace: true }); // go back from where you come.
+      } else {
+        console.log(">>> Login fails.")
       }
     } catch (err) {
       console.log("error in login hundblesubmit() components");
-      /*
-      if (!err.response) {
-        setErrorMessage("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrorMessage("Missing Email or Password");
-      } else if (err.response?.status === 401) {
-        setErrorMessage("Unauthorized");
-      } else {
-        setErrorMessage("Login Failed");
-      }
-      */
     }
   };
 

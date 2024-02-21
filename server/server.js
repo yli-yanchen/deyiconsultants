@@ -56,7 +56,7 @@ mongoose
   );
 
 app.use("/signup", signupRoute);
-app.use("/login", loginRoute);
+app.use("/api/login", loginRoute);
 app.use("/profile", profileRoute);
 
 app.get("/auth", authControllers.verifyToken, (req, res) => {
