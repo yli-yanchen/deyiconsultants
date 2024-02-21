@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
-// const Project = require("./projectModel");
+const Project = require("./projectModel");
 dotenv.config();
 
 const SALT_FACTOR = Number(process.env.SALT_FACTOR);
@@ -15,19 +15,19 @@ const ROLE = {
   BASIC: "basic",
 }
 
-const tokenSchema = new Schema({
-  refreshToken: String,
-  expireDate: {
-    type: Date,
-    default: function () {
-      const currentDate = new Date();
-      const expirationDate = new Date(currentDate);
-      expirationDate.setDate(currentDate.getDate() + 7);
-      return expirationDate;
-    },
-  },
-  createAt: { type: Date, default: Date.now },
-});
+// const tokenSchema = new Schema({
+//   refreshToken: String ,
+//   expireDate: {
+//     type: Date,
+//     default: function () {
+//       const currentDate = new Date();
+//       const expirationDate = new Date(currentDate);
+//       expirationDate.setDate(currentDate.getDate() + 7);
+//       return expirationDate;
+//     },
+//   },
+//   createAt: { type: Date, default: Date.now },
+// });
 
 const userSchema = new Schema({
   firstName: { type: String, required: true },
@@ -35,8 +35,8 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: [ROLE.ADMIN, ROLE.BASIC], default: ROLE.BASIC },
-  accessToken: { type: String },
-  refreshToken: tokenSchema,
+  // accessToken: { type: String },
+  // refreshToken: tokenSchema,
   projectid: { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
 });
 

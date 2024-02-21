@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 
 const Profile = () => {
-  // const { userid } = useParams();
+
 
   return (
     <div
