@@ -16,6 +16,14 @@ const profileRoute = require("./routes/profileRoute");
 const authControllers = require("./controllers/authController");
 
 app.use(express.json());
+// Store session data on the client within a cookie without requiring database
+app.use(
+  cookieSession({
+    name: "deyi-consultant",
+    keys: ["secretekeyinsession"],
+    httpOnly: true,
+  })
+);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, "../build")));
 app.use(
@@ -24,16 +32,6 @@ app.use(
     credentials: true,
   })
 );
-
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*"); // Allow requests from any origin
-//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS"); // Allow the specified HTTP methods
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   ); // Allow the specified headers
-//   next();
-// });
 
 app.use(
   cookieSession({
@@ -55,11 +53,12 @@ mongoose
     console.log("error from mongoose connection", error.message)
   );
 
-app.use("/signup", signupRoute);
+app.use("/api/signup", signupRoute);
 app.use("/api/login", loginRoute);
-app.use("/profile", profileRoute);
+app.use("/api/profile", profileRoute);
 
-app.get("/auth", authControllers.verifyToken, (req, res) => {
+app.get("/api/auth", authControllers.verifyToken, (req, res) => {
+  console.log("User authenticated:", res.locals.user);
   res.status(200).json(res.locals.user);
 });
 

@@ -15,16 +15,24 @@ const RequiredAuth = () => {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const authorizedUser = await axios.get(
-          "/auth",
-          {
-            withCredentials: true,
+        const accessToken = localStorage.getItem("accessToken");
+        console.log(">>> accessToken in requiredAtuh: ", accessToken);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
           },
+          credentials: "include",
+        };
+
+        const authorizedUser = await axios.get(
+          "http://localhost:3000/api/auth",
+          config
         );
         console.log(">>> authorizedUser: ", authorizedUser);
         if (authorizedUser) setLoggedIn(true);
       } catch (error) {
         setLoggedIn(false);
+        setLoading(false);
         console.log("Error authorizing user: ", error);
       } finally {
         setLoading(false);
@@ -32,7 +40,6 @@ const RequiredAuth = () => {
     };
     verifyToken();
   }, []);
-
 
   if (loading) {
     return <Loading />;

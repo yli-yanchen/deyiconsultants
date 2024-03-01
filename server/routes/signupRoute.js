@@ -7,7 +7,6 @@ router.post(
   signupController.duplicateUser,
   signupController.createUser,
   authControllers.generateToken,
-  // authControllers.verifyToken,
   (req, res) => {
     return res.status(200).json(res.locals.user);
   }

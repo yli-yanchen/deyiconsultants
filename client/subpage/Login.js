@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "../hook/axios";
 import useAuth from "../hook/useAuth";
@@ -21,6 +22,7 @@ const Login = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [userid, setUserID] = useState("");
   const [userRole, setUserRole] = useState("");
+  const [_, setCookies] = useCookies(["access_token"]);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -30,18 +32,10 @@ const Login = () => {
     setErr("");
   }, [email, password]);
 
-  useEffect(() => {
-    if (isLogged) {
-      setAuth({ userid, userRole });
-      navigate(`/profile/${userRole}/${userid}`);
-    }
-    console.log(">>> loginnnnnnnnnnn");
-  }, [isLogged, navigate, userRole, userid]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();  // prevent reload the page
     console.log(">>> current email from user input: ", emailRef.current.value);
-
+    
     try {
       const loginres = await axios.post("/api/login", {
         email: email,
@@ -50,13 +44,18 @@ const Login = () => {
       console.log(">>> this is from loginres: ", loginres?.data);
       
       if (loginres && loginres.data) {
-        const userid = loginres?.data?._id.toString();
+        const userid = loginres?.data?.user._id.toString();
         const trimmedUserID = userid.substring(0, 6);
-        const role = loginres?.data.role;
-        setIsLogged(true);
+        const role = loginres?.data.user.role;
         setUserID(trimmedUserID);
         setUserRole(role);
         console.log(">>> ready to navigate toe profile page")
+
+        setCookies("access_token", loginres.data.accessToken);
+        window.localStorage.setItem("userid", userid);
+        window.localStorage.setItem("accessToken", loginres.data.accessToken);
+        setAuth(true);
+        navigate("/Profile");
         // navigate(from, { replace: true }); // go back from where you come.
       } else {
         console.log(">>> Login fails.")
