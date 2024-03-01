@@ -49,12 +49,19 @@ const App = () => {
         </Route>
 
         <Route element={<RequiredAuth />}>
-          <Route path="profile/basic/:id" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
-        <Route element={<RequiredAuth />}>
-          <Route path="profile/admin/:id" element={<Profile />} />
-        </Route>
+        {/* <Route path="/profile/basic/:id" element={
+            <RequiredAuth>
+              <Profile />
+            </RequiredAuth>
+        } />
+        <Route path="/profile/admin/:id" element={
+            <RequiredAuth>
+              <Profile />
+            </RequiredAuth>
+        } /> */}
       </Routes>
     </main>
   );

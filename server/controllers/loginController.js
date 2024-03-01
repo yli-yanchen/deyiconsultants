@@ -55,4 +55,27 @@ loginController.verifyUser = async (req, res, next) => {
   }
 };
 
+loginController.handleLogout = async (req, res, next) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.sendStatus(204); //No content
+  const refreshToken = cookies.jwt;
+
+  // Is refreshToken in db?
+  const foundUser = await model.User.findOne({ refreshToken }).exec();
+  if (!foundUser) {
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+    return res.sendStatus(204);
+  }
+
+  // Delete refreshToken in db
+  foundUser.refreshToken = foundUser.refreshToken.filter(
+    (rt) => rt !== refreshToken
+  );
+  const result = await foundUser.save();
+  console.log(">>> new users with removed refreshToken: ", result);
+
+  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  return next();
+};
+
 module.exports = loginController;

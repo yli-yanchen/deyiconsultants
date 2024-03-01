@@ -32,9 +32,11 @@ const Signup = () => {
     console.log(">>> userdata that send to signup routes: ", userData);
 
     try {
-        const signupres = await axios.post("/signup/newuser", userData);
-        if (signupres) navigate("/profile");
-        console.log(">>> Response got from axios.post('signup/newuser')", JSON.stringify(signupres));
+        const signupres = await axios.post("/api/signup/newuser", userData);
+        const userid = signupres?.data?._id.toString();
+        const trimmedUserID = userid.substring(0, 6);
+        const role = signupres?.data?.role;
+        if ((signupres)) return navigate(`/profile/${role}/${trimmedUserID}`);  
     } catch (err) {
         console.log(
           ">>> Error in axios.post(/signup/newuser): ",
