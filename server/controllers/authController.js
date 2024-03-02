@@ -28,7 +28,7 @@ authControllers.generateToken = async (req, res, next) => {
       process.env.REFRESH_TOKEN,
       {
         algorithm: "HS256",
-        expiresIn: "1d",
+        expiresIn: "1m",
       }
     );
 
@@ -59,6 +59,7 @@ authControllers.generateToken = async (req, res, next) => {
     }
 
     res.locals.user.refreshToken = newRefreshTokenArray;
+
     const result = await model.User.findOneAndUpdate(
       { email: res.locals.user.email },
       { refreshToken: newRefreshTokenArray },
@@ -81,7 +82,7 @@ authControllers.generateToken = async (req, res, next) => {
   }
 };
 
-authControllers.verifyToken = (req, res, next) => {
+authControllers.verifyToken = async (req, res, next) => {
   try {
     const accessToken = req.headers.authorization.split(" ")[1];
     console.log(">>> accessToken from header: ", accessToken);
@@ -94,6 +95,13 @@ authControllers.verifyToken = (req, res, next) => {
       return next(notoken);
     }
 
+    const userid = req.headers.userid;
+    const foundUser = await model.User.findById({ _id: userid });
+    res.locals.user = foundUser;
+
+    const refreshTokens = foundUser.refreshToken;
+    console.log(">>> refreshToken saved in db: ", refreshTokens);
+
     // if there is token then verify its token
     jwt.verify(
       accessToken,
@@ -103,6 +111,43 @@ authControllers.verifyToken = (req, res, next) => {
           if (err.name === "TokenExpiredError") {
             // verify the refresh token, if expire, then reassign.
             console.log("The token is expired.");
+
+            // verify the refreshToken in db
+            jwt.verify(
+              refreshTokens[refreshTokens.length - 1],
+              process.env.REFRESH_TOKEN,
+              async (err, decodedRefreshToken) => {
+                if (err) {
+                  foundUser.refreshToken = refreshTokens;
+                  await foundUser.save();
+                  return res.sendStatus(403);
+                } else {
+                  const newAccessToken = jwt.sign(
+                    {
+                      userid: res.locals.user._id.toString(),
+                      email: res.locals.user.email,
+                      role: res.locals.user.role,
+                    },
+                    process.env.TOKEN_SECRET,
+                    {
+                      algorithm: "HS256",
+                      expiresIn: "5s",
+                    }
+                  );
+                  foundUser.refreshToken = [...refreshTokens, newAccessToken];
+                  res.cookie("accessToken", newAccessToken, {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "None",
+                    maxAge: 24 * 60 * 60 * 1000,
+                  });
+                }
+
+                return next();
+              }
+            );
+          } else {
+            return next(err);
           }
         } else {
           // accessToken is valid, set user information in request body
