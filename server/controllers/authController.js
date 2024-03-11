@@ -15,7 +15,7 @@ authControllers.generateToken = async (req, res, next) => {
       process.env.TOKEN_SECRET,
       {
         algorithm: "HS256",
-        expiresIn: "5s",
+        expiresIn: "10m",
       }
     );
 
@@ -28,7 +28,7 @@ authControllers.generateToken = async (req, res, next) => {
       process.env.REFRESH_TOKEN,
       {
         algorithm: "HS256",
-        expiresIn: "1m",
+        expiresIn: "1h",
       }
     );
 
@@ -112,6 +112,12 @@ authControllers.verifyToken = async (req, res, next) => {
             // verify the refresh token, if expire, then reassign.
             console.log("The token is expired.");
 
+            if (!refreshTokens || refreshTokens.length === 0) {
+              foundUser.refreshToken = refreshTokens; // Assuming you want to keep it as it is
+              await foundUser.save();
+              return res.sendStatus(403); // Or handle the error appropriately
+            }
+
             // verify the refreshToken in db
             jwt.verify(
               refreshTokens[refreshTokens.length - 1],
@@ -131,7 +137,7 @@ authControllers.verifyToken = async (req, res, next) => {
                     process.env.TOKEN_SECRET,
                     {
                       algorithm: "HS256",
-                      expiresIn: "5s",
+                      expiresIn: "10m",
                     }
                   );
                   foundUser.refreshToken = [...refreshTokens, newAccessToken];

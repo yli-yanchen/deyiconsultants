@@ -58,7 +58,6 @@ app.use("/api/login", loginRoute);
 app.use("/api/profile", profileRoute);
 
 app.get("/api/auth", authControllers.verifyToken, (req, res) => {
-  console.log("User authenticated:", res.locals.user);
   res.status(200).json(res.locals.user);
 });
 
