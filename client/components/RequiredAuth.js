@@ -16,10 +16,12 @@ const RequiredAuth = () => {
     const verifyToken = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
+        const userid = localStorage.getItem('userid');
         console.log(">>> accessToken in requiredAtuh: ", accessToken);
         const config = {
           headers: {
             Authorization: `Bearer ${accessToken}`,
+            userid: userid,
           },
           credentials: "include",
         };

@@ -1,12 +1,9 @@
 const router = require("express").Router();
+const profileController = require("../controllers/profileController");
 const authControllers = require("../controllers/authController");
 
-router.post(
-  "/basic/:id",
-  authControllers.verifyToken,
-  (req, res) => {
-    return res.status(200).json(res.locals.user);
-  }
-);
+router.get("/getuser", profileController.getuser, (req, res) => {
+  res.status(200).json(res.locals.user);
+});
 
 module.exports = router;
