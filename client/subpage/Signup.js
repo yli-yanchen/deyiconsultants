@@ -36,7 +36,7 @@ const Signup = () => {
         const userid = signupres?.data?._id.toString();
         const trimmedUserID = userid.substring(0, 6);
         const role = signupres?.data?.role;
-        if ((signupres)) return navigate(`/profile/${role}/${trimmedUserID}`);  
+        if ((signupres)) return navigate("/Profile");  
     } catch (err) {
         console.log(
           ">>> Error in axios.post(/signup/newuser): ",
