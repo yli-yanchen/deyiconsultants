@@ -1,11 +1,15 @@
 import React, { useState, useRef } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
+import useAuth from "../hook/useAuth";
+import { useCookies } from "react-cookie";
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 // import "../stylesheets/loginstyles.css";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [_, setCookies] = useCookies(["access_token"]);
+  const { setAuth } = useAuth();
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -33,9 +37,12 @@ const Signup = () => {
 
     try {
         const signupres = await axios.post("/api/signup/newuser", userData);
-        const userid = signupres?.data?._id.toString();
-        const trimmedUserID = userid.substring(0, 6);
-        const role = signupres?.data?.role;
+        const userid = signupres?.data?.user._id.toString();
+
+        setCookies("access_token", signupres.data.accessToken);
+        window.localStorage.setItem("userid", userid);
+        window.localStorage.setItem("accessToken", signupres.data.accessToken);
+        setAuth(true);
         if ((signupres)) return navigate("/Profile");  
     } catch (err) {
         console.log(
