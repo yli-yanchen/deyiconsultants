@@ -15,20 +15,6 @@ const ROLE = {
   BASIC: "basic",
 }
 
-// const tokenSchema = new Schema({
-//   refreshToken: String ,
-//   expireDate: {
-//     type: Date,
-//     default: function () {
-//       const currentDate = new Date();
-//       const expirationDate = new Date(currentDate);
-//       expirationDate.setDate(currentDate.getDate() + 7);
-//       return expirationDate;
-//     },
-//   },
-//   createAt: { type: Date, default: Date.now },
-// });
-
 const userSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -42,6 +28,10 @@ const userSchema = new Schema({
 userSchema.pre("save", function (next) {
   const user = this;
   console.log(">>> Non-hashed User password: ", user.password);
+
+  // Check if the password field is modified or the document is new
+  // The isModified() method is not a user-defined function; it's a built-in method provided by Mongoose to check if a specific field in a document has been modified.
+  if (!user.isModified("password")) return next();
 
   bcrypt.hash(user.password, SALT_FACTOR, function (err, hash) {
     if (err) return next(err);
