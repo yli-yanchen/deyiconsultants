@@ -33,7 +33,6 @@ authControllers.generateToken = async (req, res, next) => {
     );
 
     res.cookie("accessToken", accessToken);
-
     res.locals.accessToken = accessToken;
 
     let newRefreshTokenArray;

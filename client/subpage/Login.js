@@ -19,9 +19,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(null);
-  const [isLogged, setIsLogged] = useState(false);
-  const [userid, setUserID] = useState("");
-  const [userRole, setUserRole] = useState("");
+  // const [isLogged, setIsLogged] = useState(false);
+  // const [userid, setUserID] = useState("");
+  // const [userRole, setUserRole] = useState("");
   const [_, setCookies] = useCookies(["access_token"]);
 
   useEffect(() => {
@@ -45,12 +45,6 @@ const Login = () => {
       
       if (loginres && loginres.data) {
         const userid = loginres?.data?.user._id.toString();
-        const trimmedUserID = userid.substring(0, 6);
-        const role = loginres?.data.user.role;
-        setUserID(trimmedUserID);
-        setUserRole(role);
-        console.log(">>> ready to navigate toe profile page")
-
         setCookies("access_token", loginres.data.accessToken);
         window.localStorage.setItem("userid", userid);
         window.localStorage.setItem("accessToken", loginres.data.accessToken);

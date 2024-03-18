@@ -8,7 +8,7 @@ router.post(
   signupController.createUser,
   authControllers.generateToken,
   (req, res) => {
-    return res.status(200).json(res.locals.user);
+    return res.status(200).json({ accessToken: res.locals.accessToken, user: res.locals.user });
   }
 );
 

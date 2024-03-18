@@ -21,7 +21,7 @@ module.exports = {
       // foublue: "#e2ddc7",
       priwhite: "white",
       secwhite: "#D9D9D9",
-      // thdwhite: "#45301F",
+      thdwhite: "lightgray",
     },
     extend: {},
   },
