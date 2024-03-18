@@ -32,33 +32,34 @@ const Profile = () => {
 
   return (
     <main
-      className="h-screen flex flex-row justify-center items-center relative"
-      style={{
-        backgroundImage: `url(${homeImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-      }}
+      className="h-screen justify-center items-center relative"
+      // style={{
+      //   backgroundImage: `url(${homeImage})`,
+      //   backgroundSize: "cover",
+      //   backgroundPosition: "center",
+      //   backgroundColor: "rgba(255, 255, 255, 0.05)",
+      // }}
     >
-      <div className="fixed top-4 left-4 h-1.5 w-2 items-center">
-        <HiOutlineMenu
-          className="font-bold size-6"
-          onClick={() =>
-            activeSideBar ? setActiveSideBar(false) : setActiveSideBar(true)
-          }
-        />
-        <span className="text-priblue"> Hi, {currUser.firstName}</span>
+      <div className="fixed w-full h-14 bg-priwhite ">
+        <div className="fixed flex-row top-4 left-4 h-1.5 w-2 items-center">
+          <HiOutlineMenu
+            className="fixed flex-row font-bold size-6"
+            onClick={() => setActiveSideBar(!activeSideBar)}
+          />
+          <span className="fixed left-16 flex-row text-priblue">
+            Hi, {currUser.firstName}
+          </span>
+        </div>
+        <div>
+          {activeSideBar ? (
+            <div className="w-72 fixed bg-priwhite">
+              <Sidebar user={currUser} />
+            </div>
+          ) : (
+            <div className="w-0"></div>
+          )}
+        </div>
       </div>
-      <div>
-        {activeSideBar ? (
-          <div className="2-72 fixed bg-priwhite">
-            <Sidebar user={currUser} />
-          </div>
-        ) : (
-          <div className="w-0"></div>
-        )}
-      </div>
-      {/* <Sidebar user={currUser}/> */}
     </main>
   );
 };

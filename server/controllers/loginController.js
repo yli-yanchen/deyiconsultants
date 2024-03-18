@@ -57,7 +57,7 @@ loginController.verifyUser = async (req, res, next) => {
 
 loginController.handleLogout = async (req, res, next) => {
   const cookies = req.cookies;
-  if (!cookies?.jwt) return res.sendStatus(204); //No content
+  if (!cookies?.accessToken) return res.sendStatus(204); //No content
   const refreshToken = cookies.jwt;
 
   // Is refreshToken in db?
