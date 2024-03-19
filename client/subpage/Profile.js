@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineMenu } from "react-icons/hi";
 import { Container, Box } from "@mui/material";
 
-import logo from "../../docs/assets/images/logo.png";
-import Sidebar from "../components/Sidebar";
+import PrivateNav from "../components/PrivateNav";
 import axios from "../hook/axios";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [currUser, setCurrUser] = useState("");
-  const [activeSideBar, setActiveSideBar] = useState(false);
 
   useEffect(() => {
     const userid = localStorage.getItem("userid");
@@ -33,27 +30,8 @@ const Profile = () => {
   }, [navigate]);
 
   return (
-    <main className="h-screen justify-center items-center relative bg-priwhite">
-      <div className="w-full h-14 flex flex-row items-center pt-10 pb-10 left-6 border-b border-thdwhite">
-        <HiOutlineMenu
-          className="w-6 ml-6 mr-6 font-bold size-14"
-          onClick={() => setActiveSideBar(!activeSideBar)}
-        />
-        <img className="h-14 w-auto" src={logo} alt="DEYI Logo" />
-        {/* search function here */}
-        <span className="ml-auto mr-12 text-priblue">
-          Hi, {currUser.firstName}
-        </span>
-      </div>
-      <div>
-        {activeSideBar ? (
-          <div className="w-72 fixed bg-priwhite">
-            <Sidebar user={currUser} />
-          </div>
-        ) : (
-          <div className="w-0"></div>
-        )}
-      </div>
+    <div>
+      <PrivateNav user={currUser}/>
       <Container
       // sx={{
       //   display: "flex",
@@ -91,7 +69,7 @@ const Profile = () => {
           Project Overview
         </Box>
       </Container>
-    </main>
+    </div>
   );
 };
 
