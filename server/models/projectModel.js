@@ -19,7 +19,8 @@ const projectSchema = new Schema({
     uploadedAt: {type: Date, default: Date.now},
     uploadedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   }],
-  createAt: { type: Date, default: Date.now},
+}, {
+  timestamps: true
 });
 
 const Project = mongoose.model("Project", projectSchema);
