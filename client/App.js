@@ -1,21 +1,22 @@
-import React, { Component, useState, useEffect } from "react";
+import React from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 import ".././client/index.css";
 
-import Navigation from "./components/Navigation.jsx";
-import Login from "./subpage/Login.js";
-import Home from "./subpage/Home.js";
+import Login from "./subpage/Login";
+import Home from "./subpage/Home";
 import About from "./subpage/About.js";
-import Expertice from "./subpage/Expertice.js";
-import Project from "./subpage/Project.js";
-import Contact from "./subpage/Contact.js";
-import Signup from "./subpage/Signup.js";
-import Profile from "./subpage/Profile.js";
-import Unauthorized from "./subpage/Unauthorized.js";
-import RequiredAuth from "./components/RequiredAuth.jsx";
-import ProjectList from "./subpage/ProjectList.js";
-import PrivateNav from "./components/PrivateNav.jsx";
+import Expertice from "./subpage/Expertice";
+import Project from "./subpage/Project";
+import Contact from "./subpage/Contact";
+import Signup from "./subpage/Signup";
+import Profile from "./subpage/Profile";
+import ProjectList from "./subpage/ProjectList";
+import Unauthorized from "./subpage/Unauthorized";
+
+import RequiredAuth from "./components/RequiredAuth";
+import Navigation from "./components/Navigation";
+import PrivateNav from "./components/PrivateNav";
 
 const RoutesWithNavigation = () => {
   return (
@@ -43,30 +44,16 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          {/* considuer to have a page of unauthorized */}
         </Route>
 
         <Route>
           <Route path="/unauthorized" element={<Unauthorized />} />
         </Route>
 
-        <Route path="/profile" element={<RequiredAuth />}>
-          <Route element={<PrivateNav />} >
-            <Route index element={<Profile />} />
-            <Route path="/projectlist" element={<ProjectList />} />
-          </Route>
+        <Route element={<RequiredAuth />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/projectlist" element={<ProjectList />} />
         </Route>
-
-        {/* <Route path="/profile/project" element={
-            <RequiredAuth>
-              <Profile />
-            </RequiredAuth>
-        } /> */}
-        {/* <Route path="/profile/admin/:id" element={
-            <RequiredAuth>
-              <Profile />
-            </RequiredAuth>
-        } /> */}
       </Routes>
     </main>
   );

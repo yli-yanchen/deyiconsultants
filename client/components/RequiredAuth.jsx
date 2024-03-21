@@ -10,8 +10,6 @@ const RequiredAuth = () => {
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
 
-  console.log(">>> current Auth: ", auth);
-
   useEffect(() => {
     const verifyToken = async () => {
       try {
