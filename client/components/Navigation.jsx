@@ -7,7 +7,7 @@ const Navigation = () => {
   const [menu, setMenu] = useState("");
 
   return (
-    <div className="container w-full relative flex flex-row justify-between items-center p-3">
+    <div className="w-full relative flex flex-row justify-between items-center p-3">
       <a href="/">
         <img
           className="logo h-28 w-90 p-3"
