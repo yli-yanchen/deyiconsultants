@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 
@@ -10,7 +10,7 @@ const Contact = () => {
   const PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY;
 
   const form = useRef();
-  const [sentEmail, setSentEmail] = useState();
+  const [sentEmail, setSentEmail] = useState("");
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -30,6 +30,12 @@ const Contact = () => {
         }
       );
   };
+
+    useEffect(() => {
+      // Reset sendEmail to null on component mount (website refresh)
+      setSentEmail("");
+    }, []);
+
 
   return (
     <div
@@ -82,11 +88,13 @@ const Contact = () => {
           required
         ></textarea>
 
-        <label className="text-darkgrey font-base">
-          {sendEmail
-            ? "Message sent successfully, we will reach out to you shortly"
-            : "Message sent fails, please resend this message"}
-        </label>
+        {sentEmail !== "" && (
+          <label className="text-darkgrey font-base">
+            {sentEmail
+              ? "Message sent successfully, we will reach out to you shortly"
+              : "Message sending failed, please resend your message"}
+          </label>
+        )}
 
         <button type="submit" className={"contactSubmit"}>
           Send
