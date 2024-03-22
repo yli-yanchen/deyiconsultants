@@ -16,7 +16,7 @@ module.exports = {
     colors: {
       transparent: "transparent",
       priblue: "#191970",
-      // secblue: "#434f3e",
+      secblue: "#434f3e",
       // thdblue: "#F4F2E9",
       // foublue: "#e2ddc7",
       priwhite: "white",
