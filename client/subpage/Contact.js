@@ -10,10 +10,31 @@ const Contact = () => {
   const PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY;
 
   const form = useRef();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [sentEmail, setSentEmail] = useState("");
 
   const sendEmail = (e) => {
     e.preventDefault();
+
+    const nameValue = form.current["from_name"].value;
+    const emailValue = form.current["from_email"].value;
+
+    if (!nameValue) {
+      setName("Name is required.");
+      return;
+    }
+
+    if (!emailValue) {
+      setEmail("Email is required.");
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(emailValue)) {
+      setEmail("Invalid email address.");
+      return; 
+    }
 
     emailjs
       .sendForm(`${SERVICE_ID}`, `${TEMPLATE_ID}`, form.current, {
@@ -31,11 +52,12 @@ const Contact = () => {
       );
   };
 
-    useEffect(() => {
-      // Reset sendEmail to null on component mount (website refresh)
-      setSentEmail("");
-    }, []);
-
+  useEffect(() => {
+    // Reset sendEmail to null on component mount (website refresh)
+    setName("");
+    setEmail("");
+    setSentEmail("");
+  }, []);
 
   return (
     <div
@@ -49,8 +71,8 @@ const Contact = () => {
         <h2 className="text-priwhite text-3xl font-bold m-8 items-start">
           LET US KEEP IN TOUCH
         </h2>
-        <div className="flex flex-col justify-start text-left text-priwhite">
-          <span className="font-semibold">Irvine Office </span>
+        <div className="flex flex-col justify-start text-left text-priwhite mb-2">
+          <span className="font-semibold mb-4">Irvine Office </span>
           <span>2725 Whispering Trl</span>
           <span>Irvine, CA 92602</span>
           <span>Tel: (949) 656 - 6134 </span>
@@ -63,7 +85,6 @@ const Contact = () => {
         onSubmit={sendEmail}
         className="h-screen w-1/2 flex flex-col justify-center items-center"
       >
-        {/* <label className="text-priblue font-semibold">Name</label> */}
         <input
           type="text"
           name="from_name"
@@ -71,7 +92,8 @@ const Contact = () => {
           className={"FormInfor"}
           required
         />
-        {/* <label className="text-priblue font-semibold">Email</label> */}
+        {name && <label className="text-priblue font-base"> {name} </label>}
+
         <input
           type="email"
           name="from_email"
@@ -79,6 +101,7 @@ const Contact = () => {
           className={"FormInfor"}
           required
         />
+        {email && <label className="text-priblue font-base"> {email} </label>}
 
         <textarea
           name="message"
@@ -89,7 +112,7 @@ const Contact = () => {
         ></textarea>
 
         {sentEmail !== "" && (
-          <label className="text-darkgrey font-base">
+          <label className="text-priblue font-base">
             {sentEmail
               ? "Message sent successfully, we will reach out to you shortly"
               : "Message sending failed, please resend your message"}
