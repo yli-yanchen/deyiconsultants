@@ -1,13 +1,22 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
+// import Appoitment from "../components/Appoitment";
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 import ResImage from "../../docs/assets/images/Residential.jpg";
 
 import Button from "@mui/material/Button";
 import PhoneIcon from "@mui/icons-material/Phone";
-// import SendIcon from "@mui/icons-material/Send";
-// import Stack from "@mui/material/Stack";
+// import { useCalendlyEventListener, InlineWidget } from "react-calendly";
+
 
 const Procedure = () => {
+  const navigate = useNavigate();
+  const scheduleAppoitment = (e) => {
+    e.preventDefault();
+    navigate("/appoitment");
+  };
+
   return (
     <div
       className="h-auto flex flex-col overflow-hidden"
@@ -54,11 +63,13 @@ const Procedure = () => {
           </span>
           <br />
           <Button
+            id="appoitment"
             variant="contained"
             startIcon={<PhoneIcon />}
+            onClick={scheduleAppoitment}
             sx={{ bgcolor: "#191970", color: "#fff" }}
           >
-            Contact Us
+            Click Here to Schedule!
           </Button>
         </div>
       </div>

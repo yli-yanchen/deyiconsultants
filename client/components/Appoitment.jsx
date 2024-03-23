@@ -1,20 +1,22 @@
 import React from "react";
-import { PopupButton } from "react-calendly";
+import { useCalendlyEventListener, InlineWidget } from "react-calendly";
 
 // https://calendly.com
 
 const Appoitment = () => {
+  const URL = process.env.REACT_APP_APPOITMENT_URL;
+
+  useCalendlyEventListener({
+    onProfilePageViewed: () => console.log("onProfilePageViewed"),
+    onDateAndTimeSelected: () => console.log("onDateAndTimeSelected"),
+    onEventTypeViewed: () => console.log("onEventTypeViewed"),
+    onEventScheduled: (e) => console.log(e.data.payload),
+  });
+
   return (
     <div className="App">
-      <PopupButton
-        url="https://calendly.com/info-y_ai"
-        /*
-         * react-calendly uses React's Portal feature (https://reactjs.org/docs/portals.html) to render the popup modal. As a result, you'll need to
-         * specify the rootElement property to ensure that the modal is inserted into the correct domNode.
-         */
-        rootElement={document.getElementById("root")}
-        text="Click here to schedule!"
-      />
+      {/* <InlineWidget url={`${URL}`} /> */}
+      <InlineWidget url="https://calendly.com/info-y_ai" />
     </div>
   );
 };
