@@ -36,6 +36,7 @@
     "joi": "^17.11.0",
     "joi-password-complexity": "^5.2.0",
     "jsonwebtoken": "^9.0.2",
+    "mdb-react-ui-kit": "^7.2.0",
     "moment": "^2.29.4",
     "mongoose": "^8.0.3",
     "node-fetch": "^3.3.2",
