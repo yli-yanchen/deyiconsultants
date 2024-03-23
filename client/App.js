@@ -14,6 +14,7 @@ import Profile from "./subpage/Profile";
 import ProjectList from "./subpage/ProjectList";
 import Unauthorized from "./subpage/Unauthorized";
 
+import Footer from "./components/Footer";
 import RequiredAuth from "./components/RequiredAuth";
 import Navigation from "./components/Navigation";
 
@@ -22,6 +23,7 @@ const RoutesWithNavigation = () => {
     <div>
       <Navigation />
       <Outlet /> {/* Render child routes here */}
+      <Footer />
     </div>
   );
 };
