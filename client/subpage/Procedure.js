@@ -1,7 +1,7 @@
 import React from "react";
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 
-const Project = () => {
+const Procedure = () => {
   return (
     <div
       className="h-screen flex flex-row justify-center items-center overflow-hidden"
@@ -12,9 +12,9 @@ const Project = () => {
         backgroundColor: "rgba(255, 255, 255, 0.05)",
       }}
     >
-      <h1 className=""> Project Page </h1>
+      <h1 className=""> Procedure Page </h1>
     </div>
   );
 };
 
-export default Project;
+export default Procedure;
