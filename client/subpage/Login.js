@@ -102,7 +102,7 @@ const Login = () => {
         onChange={(e) => setEmail(e.target.value)}
         className={"inputBox"}
         value={email}
-        autoComplete="off"
+        autoComplete="on"
         required
       />
       {/* <label className="errorLabel">{userError.emailError}</label> */}

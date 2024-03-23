@@ -7,7 +7,7 @@ import Login from "./subpage/Login";
 import Home from "./subpage/Home";
 import About from "./subpage/About.js";
 import Expertice from "./subpage/Expertice";
-import Project from "./subpage/Project";
+import Procedure from "./subpage/Procedure.js";
 import Contact from "./subpage/Contact";
 import Signup from "./subpage/Signup";
 import Profile from "./subpage/Profile";
@@ -16,7 +16,6 @@ import Unauthorized from "./subpage/Unauthorized";
 
 import RequiredAuth from "./components/RequiredAuth";
 import Navigation from "./components/Navigation";
-import PrivateNav from "./components/PrivateNav";
 
 const RoutesWithNavigation = () => {
   return (
@@ -39,7 +38,7 @@ const App = () => {
         <Route path="/" element={<RoutesWithNavigation />}>
           <Route index element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/project" element={<Project />} />
+          <Route path="/Procedure" element={<Procedure />} />
           <Route path="/expertice" element={<Expertice />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />

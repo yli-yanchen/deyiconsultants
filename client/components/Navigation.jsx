@@ -7,13 +7,9 @@ const Navigation = () => {
   const [menu, setMenu] = useState("");
 
   return (
-    <div className="container w-full relative flex flex-row justify-between items-center p-3">
+    <div className="w-full relative flex flex-row justify-between items-center p-3">
       <a href="/">
-        <img
-          className="logo h-28 w-90 p-3"
-          src={logo}
-          alt="DEYI Logo"
-        />
+        <img className="logo h-28 w-90 p-3" src={logo} alt="DEYI Logo" />
       </a>
 
       <ul className="navbar flex flex-row pl-80 pr-2 items-center text-center">
@@ -27,9 +23,9 @@ const Navigation = () => {
             EXPERTICE{menu === "EXPERTICE" ? <hr /> : <></>}
           </Link>
         </li>
-        <li className="navitem" onClick={() => setMenu("PROJECT")}>
-          <Link style={{ textDecoration: "none" }} to={"/project"}>
-            PROJECT{menu === "PROJECT" ? <hr /> : <></>}
+        <li className="navitem" onClick={() => setMenu("PROCEDURE")}>
+          <Link style={{ textDecoration: "none" }} to={"/procedure"}>
+            PROCEDURE{menu === "PROCEDURE" ? <hr /> : <></>}
           </Link>
         </li>
         <li className="navitem" onClick={() => setMenu("CONTACT")}>

@@ -11,11 +11,35 @@
     @apply flex justify-center items-center m-4 w-80 h-10 indent-2 bg-priwhite text-base rounded-lg;
   }
 
+  .inputBox:focus {
+    @apply bg-secwhite;
+  }
+
   .submitBtnBlue {
     @apply flex justify-center items-center m-2 w-80 h-10 rounded-lg text-priwhite bg-priblue text-base font-normal cursor-pointer;
   }
 
   .submitBtnWhite {
     @apply flex justify-center items-center m-2 w-80 h-10 rounded-lg text-priblue bg-priwhite text-base font-normal cursor-pointer;
+  }
+
+  .FormInfor {
+    @apply flex justify-center items-center m-4 w-96 h-10 indent-2 rounded-xl text-priblue bg-priwhite text-base font-normal;
+  }
+
+  .FormInfor:focus {
+    @apply bg-secwhite;
+  }
+
+  .MessageForm {
+    @apply flex justify-center items-center m-4 w-96 h-60 indent-2 rounded-xl text-priblue bg-priwhite text-base font-normal;
+  }
+
+  .MessageForm:focus {
+    @apply bg-secwhite;
+  }
+
+  .contactSubmit {
+    @apply flex justify-center items-center m-4 w-40 h-10 rounded-lg text-priwhite bg-priblue text-base font-normal cursor-pointer;
   }
 }
