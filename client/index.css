@@ -42,4 +42,8 @@
   .contactSubmit {
     @apply flex justify-center items-center m-4 w-40 h-10 rounded-lg text-priwhite bg-priblue text-base font-normal cursor-pointer;
   }
+
+  .footerItem {
+    @apply block text-priblue text-start no-underline font-normal leading-10 items-center align-middle gap-5 text-sm mx-4;
+  }
 }

@@ -71,12 +71,12 @@ const Contact = () => {
         <h2 className="text-priwhite text-3xl font-bold m-8 items-start">
           LET US KEEP IN TOUCH
         </h2>
-        <div className="flex flex-col justify-start text-left text-priwhite mb-2">
+        <div className="flex flex-col justify-start text-left text-priwhite my-2">
           <span className="font-semibold mb-4">Irvine Office </span>
-          <span>2725 Whispering Trl</span>
-          <span>Irvine, CA 92602</span>
-          <span>Tel: (949) 656 - 6134 </span>
-          <span>info@deyiconsultants</span>
+          <span className="my-1">2725 Whispering Trl</span>
+          <span className="my-1">Irvine, CA 92602</span>
+          <span className="my-1">Tel: (949) 656 - 6134 </span>
+          <span className="my-1">info@deyiconsultants</span>
         </div>
       </div>
 

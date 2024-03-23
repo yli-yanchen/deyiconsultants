@@ -84,7 +84,7 @@ const About = () => {
 
       <div
         style={{ backgroundImage: `url(${slides[currentIndex]})`}}
-        className="w-1/2 h-2/3 left-4 flex flex-col rounded-2xl bg-center bg-cover duration-500 mr-10 mt-0"
+        className="w-1/2 h-2/3 left-4 flex flex-col rounded-2xl bg-center bg-cover duration-500 mr-14 mt-0"
       >
         {/* Left Arrow */}
         <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">

@@ -14,14 +14,17 @@ import Profile from "./subpage/Profile";
 import ProjectList from "./subpage/ProjectList";
 import Unauthorized from "./subpage/Unauthorized";
 
+import Footer from "./components/Footer";
 import RequiredAuth from "./components/RequiredAuth";
 import Navigation from "./components/Navigation";
+import Appoitment from "./components/Appoitment.jsx";
 
 const RoutesWithNavigation = () => {
   return (
     <div>
       <Navigation />
       <Outlet /> {/* Render child routes here */}
+      <Footer />
     </div>
   );
 };
@@ -40,6 +43,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/Procedure" element={<Procedure />} />
           <Route path="/expertice" element={<Expertice />} />
+          <Route path="/appoitment" element={<Appoitment />} /> 
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
