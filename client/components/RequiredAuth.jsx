@@ -15,7 +15,6 @@ const RequiredAuth = () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
         const userid = localStorage.getItem('userid');
-        console.log(">>> accessToken in requiredAtuh: ", accessToken);
         const config = {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -28,7 +27,6 @@ const RequiredAuth = () => {
           "http://localhost:3000/api/auth",
           config
         );
-        console.log(">>> authorizedUser: ", authorizedUser);
         if (authorizedUser) setLoggedIn(true);
       } catch (error) {
         setLoggedIn(false);

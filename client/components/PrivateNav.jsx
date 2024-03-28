@@ -1,18 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RiPictureInPictureExitLine } from "react-icons/ri";
 import { HiOutlineMenu } from "react-icons/hi";
 
 import logo from "../../docs/assets/images/logo.png";
+import axios from "../hook/axios";
 
 const PrivateNav = (props) => {
+  const navigate = useNavigate();
   const [menu, setMenu] = useState("");
   const [activeSideBar, setActiveSideBar] = useState(false);
 
   // const navigate = useNavigate();
-  const handleLogout = () => {
-    setMenu("Logout");
-    // process logout in backend
+  const handleLogout = async () => {
+    try {
+      setMenu("Logout");
+      const setLogout = await axios.post("/login/logout");
+      if (setLogout) {
+        console.log(">>> remove userinformation from cookie, and updated db successfully");
+        navigate("/");
+      } else {
+        console.log(">>> error in handleLogout");
+      }
+      window.localStorage.removeItem("userid");
+      window.localStorage.removeItem("accessToken");
+    } catch (error) {
+      console.log(">>> Logout Client Side Error: ", error)
+    }
   };
 
   return (
@@ -28,7 +42,7 @@ const PrivateNav = (props) => {
           Hi, {props.user.firstName}
         </span>
       </div>
-      
+
       <div>
         {activeSideBar ? (
           <>

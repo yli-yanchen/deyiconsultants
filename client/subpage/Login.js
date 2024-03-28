@@ -19,9 +19,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(null);
-  // const [isLogged, setIsLogged] = useState(false);
-  // const [userid, setUserID] = useState("");
-  // const [userRole, setUserRole] = useState("");
   const [_, setCookies] = useCookies(["access_token"]);
 
   useEffect(() => {

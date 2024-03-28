@@ -7,11 +7,17 @@ router.post(
   loginController.verifyUser,
   authControllers.generateToken,
   (req, res) => {
-    return res.status(200).json({ accessToken: res.locals.accessToken, user: res.locals.user });
+    return res
+      .status(200)
+      .json({ accessToken: res.locals.accessToken, user: res.locals.user });
   }
 );
 
-router.post("/logout", loginController.handleLogout, (req, res) => {
-  return res.sendStatus(204);
-});
+router.post(
+  "/logout",
+  loginController.handleLogout,
+  (req, res) => {
+    return res.sendStatus(204);
+  }
+);
 module.exports = router;
