@@ -55,15 +55,21 @@ loginController.verifyUser = async (req, res, next) => {
   }
 };
 
+
 loginController.handleLogout = async (req, res, next) => {
   const cookies = req.cookies;
-  if (!cookies?.accessToken) return res.sendStatus(204); //No content
-  const refreshToken = cookies.jwt;
+  console.log(">>> cookies: ", cookies);
+  if (!cookies?.access_token) return res.sendStatus(204); //No content
 
   // Is refreshToken in db?
-  const foundUser = await model.User.findOne({ refreshToken }).exec();
-  if (!foundUser) {
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  const userid = req.headers.userid;
+  const foundUser = await model.User.findById({ _id: userid });
+  if (!foundUser.refreshToken) {
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    });
     return res.sendStatus(204);
   }
 
@@ -74,7 +80,11 @@ loginController.handleLogout = async (req, res, next) => {
   const result = await foundUser.save();
   console.log(">>> new users with removed refreshToken: ", result);
 
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    sameSite: "None",
+    secure: true,
+  });
   return next();
 };
 

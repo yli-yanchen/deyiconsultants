@@ -3,9 +3,7 @@ const profileController = {};
 
 profileController.getuser = async (req, res, next) => {
   try {
-    console.log(">>> I am here!");
     const userid = req.headers.authorization.replace("Bearer ", "");
-    console.log(">>> userid from local storage in server side: ", userid);
     if (!userid) {
       const noneUserid = {
         log: "Express error handler caught profileController.getuser error - userid",
