@@ -15,10 +15,10 @@ const PrivateNav = (props) => {
   const handleLogout = async () => {
     try {
       setMenu("Logout");
-      const setLogout = await axios.post("/login/logout");
+      const setLogout = await axios.post("/api/login/logout");
       if (setLogout) {
         console.log(">>> remove userinformation from cookie, and updated db successfully");
-        navigate("/");
+        navigate("/login");
       } else {
         console.log(">>> error in handleLogout");
       }

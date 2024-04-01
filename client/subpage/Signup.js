@@ -8,7 +8,7 @@ import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [_, setCookies] = useCookies(["access_token"]);
+  const [_, setCookies] = useCookies(["accessToken"]);
   const { setAuth } = useAuth();
 
   const [userData, setUserData] = useState({
@@ -39,7 +39,7 @@ const Signup = () => {
         const signupres = await axios.post("/api/signup/newuser", userData);
         const userid = signupres?.data?.user._id.toString();
 
-        setCookies("access_token", signupres.data.accessToken);
+        setCookies("accessToken", signupres.data.accessToken);
         window.localStorage.setItem("userid", userid);
         window.localStorage.setItem("accessToken", signupres.data.accessToken);
         setAuth(true);

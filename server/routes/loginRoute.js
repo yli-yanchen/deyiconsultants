@@ -17,7 +17,7 @@ router.post(
   "/logout",
   loginController.handleLogout,
   (req, res) => {
-    return res.sendStatus(204);
+    return res.status(200).json("logout successfully.");
   }
 );
 module.exports = router;

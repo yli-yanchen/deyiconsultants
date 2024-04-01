@@ -1,9 +1,9 @@
 import { useCookies } from "react-cookie";
 
 export const useGetToken = () => {
-  const [cookies, _] = useCookies(["access_token"]);
+  const [cookies, _] = useCookies(["accessToken"]);
 
   return {
-    headers: { authorization: cookies.access_token },
+    headers: { authorization: cookies.accessToken },
   };
 };
