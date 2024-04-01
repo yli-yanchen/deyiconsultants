@@ -19,7 +19,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(null);
-  const [_, setCookies] = useCookies(["access_token"]);
+  const [_, setCookies] = useCookies(["accessToken"]);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -42,7 +42,7 @@ const Login = () => {
       
       if (loginres && loginres.data) {
         const userid = loginres?.data?.user._id.toString();
-        setCookies("access_token", loginres.data.accessToken);
+        setCookies("accessToken", loginres.data.accessToken);
         window.localStorage.setItem("userid", userid);
         window.localStorage.setItem("accessToken", loginres.data.accessToken);
         setAuth(true);

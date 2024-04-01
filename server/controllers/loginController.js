@@ -59,7 +59,7 @@ loginController.verifyUser = async (req, res, next) => {
 loginController.handleLogout = async (req, res, next) => {
   const cookies = req.cookies;
   console.log(">>> cookies: ", cookies);
-  if (!cookies?.access_token) return res.sendStatus(204); //No content
+  if (!cookies?.accessToken) return res.sendStatus(204); //No content
 
   // Is refreshToken in db?
   const userid = req.headers.userid;
