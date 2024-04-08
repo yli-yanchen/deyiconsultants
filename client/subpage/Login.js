@@ -15,32 +15,30 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
 
   const emailRef = useRef();
-  const errRef = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [err, setErr] = useState(null);
+  const [errorLabel, setErrorLabel] = useState("");
   const [_, setCookies] = useCookies(["accessToken"]);
 
   useEffect(() => {
     emailRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    setErr("");
-  }, [email, password]);
-
   const handleSubmit = async (e) => {
-    e.preventDefault();  // prevent reload the page
+    e.preventDefault(); // prevent reload the page
     console.log(">>> current email from user input: ", emailRef.current.value);
-    
+
     try {
       const loginres = await axios.post("/api/login", {
         email: email,
         password: password,
       });
-      console.log(">>> this is from loginres: ", loginres?.data);
-      
-      if (loginres && loginres.data) {
+      console.log(">>> this is from loginres: ", loginres);
+
+      if (loginres.data && loginres.data.err) {
+        setErrorLabel(loginres.data.err);
+        return;
+      } else if (loginres && loginres.data.user) {
         const userid = loginres?.data?.user._id.toString();
         setCookies("accessToken", loginres.data.accessToken);
         window.localStorage.setItem("userid", userid);
@@ -49,10 +47,11 @@ const Login = () => {
         navigate("/Profile");
         // navigate(from, { replace: true }); // go back from where you come.
       } else {
-        console.log(">>> Login fails.")
+        setErrorLabel("Unexpected response from the server.");
       }
     } catch (err) {
-      console.log("error in login hundblesubmit() components");
+      console.error("Error in login handleSubmit() components:", err);
+      setErrorLabel("An error occurred. Please try again later.");
     }
   };
 
@@ -102,7 +101,7 @@ const Login = () => {
         autoComplete="on"
         required
       />
-      {/* <label className="errorLabel">{userError.emailError}</label> */}
+
       <input
         type="password"
         id="password"
@@ -112,7 +111,11 @@ const Login = () => {
         value={password}
         required
       />
-      {/* <label className="errorLabel">{userError.passwordError}</label> */}
+      {errorLabel && (
+        <label className="m-0 text-sm text-priblue ">
+          {JSON.stringify(errorLabel)}
+        </label>
+      )}
 
       <div className="flex items-center m-2">
         <button
