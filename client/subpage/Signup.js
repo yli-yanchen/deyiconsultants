@@ -10,7 +10,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const [_, setCookies] = useCookies(["accessToken"]);
   const { setAuth } = useAuth();
-
+  const [errorLabel, setErrorLabel] = useState(<></>);
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -28,7 +28,7 @@ const Signup = () => {
   const clicktoLogin = (e) => {
     e.preventDefault();
     navigate("/login");
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,19 +36,25 @@ const Signup = () => {
     console.log(">>> userdata that send to signup routes: ", userData);
 
     try {
-        const signupres = await axios.post("/api/signup/newuser", userData);
-        const userid = signupres?.data?.user._id.toString();
+      const signupres = await axios.post("/api/signup/newuser", userData);
 
+      if (signupres.data && signupres.data.err) {
+        setErrorLabel(signupres.data.err);
+        return;
+      } else if (signupres && signupres.data.user) {
+        const userid = signupres?.data?.user._id.toString();
         setCookies("accessToken", signupres.data.accessToken);
         window.localStorage.setItem("userid", userid);
         window.localStorage.setItem("accessToken", signupres.data.accessToken);
         setAuth(true);
-        if ((signupres)) return navigate("/Profile");  
+        return navigate("/Profile");
+      }
     } catch (err) {
-        console.log(
-          ">>> Error in axios.post(/signup/newuser): ",
-          err.response?.data || err.message
-        );
+      console.log(
+        ">>> Error in axios.post(/signup/newuser): ",
+        err.response?.data || err.message
+      );
+      setErrorLabel("An error occurred. Please try again later.");
     }
   };
 
@@ -76,7 +82,6 @@ const Signup = () => {
         onChange={handleUserDataChange}
         className={"inputBox"}
       />
-      {/* <label className="errorLabel">{userError.emailError}</label> */}
 
       <input
         type="text"
@@ -95,7 +100,6 @@ const Signup = () => {
         onChange={handleUserDataChange}
         className={"inputBox"}
       />
-      {/* <label className="errorLabel">{userError.emailError}</label> */}
 
       <input
         type="password"
@@ -105,7 +109,12 @@ const Signup = () => {
         onChange={handleUserDataChange}
         className={"inputBox"}
       />
-      {/* <label className="errorLabel">{userError.passwordError}</label> */}
+
+      {errorLabel && (
+        <label className="m-0 text-sm text-priblue ">
+          {errorLabel}
+        </label>
+      )}
 
       <div className="flex items-center m-2">
         <button
