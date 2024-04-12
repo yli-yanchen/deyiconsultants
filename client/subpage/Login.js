@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "../hook/axios";
 import useAuth from "../hook/useAuth";
+import { useGetToken } from "../hook/useCookies";
 import homeImage from "../../docs/assets/images/homepagePicNoText.png";
 
 const Login = () => {
@@ -18,7 +19,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorLabel, setErrorLabel] = useState("");
-  const [_, setCookies] = useCookies(["accessToken"]);
+  const { setToken } = useGetToken();
 
   useEffect(() => {
     emailRef.current.focus();
@@ -40,7 +41,7 @@ const Login = () => {
         return;
       } else if (loginres && loginres.data.user) {
         const userid = loginres?.data?.user._id.toString();
-        setCookies("accessToken", loginres.data.accessToken);
+        setToken(loginres.data.accessToken);
         window.localStorage.setItem("userid", userid);
         window.localStorage.setItem("accessToken", loginres.data.accessToken);
         setAuth(true);

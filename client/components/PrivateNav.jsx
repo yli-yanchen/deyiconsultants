@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { RiPictureInPictureExitLine } from "react-icons/ri";
 import { HiOutlineMenu } from "react-icons/hi";
 
+import { useGetToken } from "../hook/useCookies";
 import logo from "../../docs/assets/images/logo.png";
 import axios from "../hook/axios";
 
 const PrivateNav = (props) => {
   const navigate = useNavigate();
   const [menu, setMenu] = useState("");
+  const { deleteToken } = useGetToken();
   const [activeSideBar, setActiveSideBar] = useState(false);
 
   // const navigate = useNavigate();
@@ -17,6 +19,7 @@ const PrivateNav = (props) => {
       setMenu("Logout");
       const setLogout = await axios.post("/api/login/logout");
       if (setLogout) {
+        deleteToken();
         console.log(">>> remove userinformation from cookie, and updated db successfully");
         navigate("/login");
       } else {
