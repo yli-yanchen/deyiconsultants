@@ -1,12 +1,12 @@
-import React, {useEffect} from "react";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import React, { useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Loading = () => {
-
   return (
-    <div className="MainContainer">
-      <h1 className="homeh1"> Loading Page... </h1>
-    </div>
+    <Box sx={{ display: 'flex justify-center' }}>
+      <CircularProgress />
+    </Box>
   );
 };
 
