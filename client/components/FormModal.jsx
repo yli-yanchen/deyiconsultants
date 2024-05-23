@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from '../hook/axios';
 
 const FromModal = ({ setModal }) => {
   const [proDetail, setProDetail] = useState({
@@ -9,40 +10,28 @@ const FromModal = ({ setModal }) => {
     Client: '',
     ProjectType: '',
     StartDate: '',
+    EndDate: '',
     Status: '',
     ContractAmount: '',
+    Reimbersement: '',
     PaidAmount: '',
-    BalanceAmount: '',
   });
 
   const handleChange = (e) => {
-    const {
-      id,
-      name,
-      address,
-      city,
-      client,
-      projectType,
-      startDate,
-      status,
-      contractAmount,
-      paidAmount,
-      balanceAmount,
-    } = e.target;
-
     setProDetail({
       ...proDetail,
-      ID: id,
-      Name: name,
-      Address: address,
-      City: city,
-      Client: client,
-      ProjectType: projectType,
-      StartDate: startDate,
-      Status: status,
-      ContractAmount: contractAmount,
-      PaidAmount: paidAmount,
-      BalanceAmount: balanceAmount,
+      ID: e.target.ID,
+      Name: e.target.Name,
+      Address: e.target.Address,
+      City: e.target.City,
+      Client: e.target.Client,
+      ProjectType: e.target.ProjectType,
+      StartDate: e.target.StartDate,
+      EndDate: e.target.EndDate,
+      Status: e.target.Status,
+      ContractAmount: e.target.ContractAmount,
+      Reimbersement: e.target.Reimbersement,
+      PaidAmount: e.target.PaidAmount,
     });
   };
 
@@ -51,14 +40,17 @@ const FromModal = ({ setModal }) => {
     setModal(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(proDetail);
+
+    // const newProject = await axios.post('/api/profile/newproject', proDetail);
+
     setModal(false);
   };
 
   const inputStyle =
-    'h-4/6 w-2/3 p-2 m-2 border border-gray-300 align-middle items-center rounded';
+    'h-4/6 w-2/3 p-2 m-2 border border-priwhite align-middle items-center rounded text-priblue';
 
   return (
     <div className='h-4/6 flex flex-col items-center justify-center rounded-lg'>
@@ -66,7 +58,7 @@ const FromModal = ({ setModal }) => {
         onSubmit={handleSubmit}
         className='h-4/6 w-1/2 flex flex-col align-middle items-center bg-priblue text-priwhite font-normal text-sm space-y-4 overflow-y-auto rounded-3xl'
       >
-        <h2 className='text-lg font-base mt-8 mb-4'> Create New Project </h2>
+        <h2 className='text-lg font-bold mt-8 mb-4'> Create New Project </h2>
         <input
           type='text'
           name='ID'
@@ -124,6 +116,14 @@ const FromModal = ({ setModal }) => {
           className={inputStyle}
         />
         <input
+          type='date'
+          name='EndDate'
+          placeholder='End Date'
+          value={proDetail.EndDate}
+          onChange={handleChange}
+          className={inputStyle}
+        />
+        <input
           type='text'
           name='Status'
           placeholder='Status'
@@ -141,17 +141,17 @@ const FromModal = ({ setModal }) => {
         />
         <input
           type='number'
-          name='PaidAmount'
-          placeholder='Paid Amount'
-          value={proDetail.PaidAmount}
+          name='Reimbersement'
+          placeholder='Reimbersement'
+          value={proDetail.Reimbersement}
           onChange={handleChange}
           className={inputStyle}
         />
         <input
           type='number'
-          name='BalanceAmount'
-          placeholder='Balance Amount'
-          value={proDetail.BalanceAmount}
+          name='PaidAmount'
+          placeholder='Paid Amount'
+          value={proDetail.PaidAmount}
           onChange={handleChange}
           className={inputStyle}
         />

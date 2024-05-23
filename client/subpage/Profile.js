@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Box } from '@mui/material';
+import axios from '../hook/axios';
 
 import PrivateLayout from '../components/PrivateLayout';
-import axios from '../hook/axios';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -21,6 +20,7 @@ const Profile = () => {
           },
         });
         setCurrUser(getuserdata.data);
+        console.log(getuserdata.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -29,60 +29,87 @@ const Profile = () => {
     fetchUserData();
   }, [navigate]);
 
+  const handleSubmit = async (e) => {};
+
+  const handleUserDataChange = (e) => {
+    setCurrUser({
+      ...currUser,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const inputStyles =
+    'h-5/6 w-96 p-2 mt-2 mb-4 border border-priwhite align-middle items-center rounded text-priblue bg-secwhite';
+  const labelStyles = '';
+
   return (
-    <div>
-      <PrivateLayout>
-        <div className='mt-8 mx-16 mb-4 flex flex-row justify-between items-center'>
-          <h2 className='font-bold text-priblue items-start text-2xl'>
-            Overview
-          </h2>
-          <select className='h-8 items-center place-content-end text-priblue w-40 rounded-full border border-gray-200 indent-2 bg-opacity-25 bg-thdwhite text-base'>
-            <option value='last-week'>Last Week</option>
-            <option value='last-30-days'>Last 30 days</option>
-            <option value='last-180-days'>Last 180 days</option>
-            <option value='last-year'>Last Year</option>
-          </select>
-        </div>
+    <PrivateLayout>
+      <div className='h-full w-1/2 flex flex-col justify-center items-center mx-auto text-priblue border-4 border-priblue shadow-2xl shadow-secwhite rounded-2xl my-10 mt-20 mb-24'>
+        <h2 className='text-2xl font-bold mt-8 mb-4'> </h2>
+        <form onSubmit={handleSubmit}>
+          <div className={labelStyles}>First Name:</div>
+          <div>
+            <input
+              className={inputStyles}
+              name='firstName'
+              type='text'
+              placeholder={currUser.firstName}
+              onChange={handleUserDataChange}
+            />
+          </div>
 
-        <div className='mx-16 mt-8 h-64 flex flex-row grid-cols-3 justify-between items-stretch'>
-          <Box className='flex flex-col justify-start items-center bg-priblue w-1/3 bg-opacity-0 rounded-lg shadow-xl p-4 mr-6'>
-            <p className=' text-priblue w-48 bg-priwhite rounded p-2 text-center h-10 font-bold'>
-              Incoming Appoitment
-            </p>
-          </Box>
-          <Box className='flex flex-col justify-start items-center bg-priblue w-1/3 bg-opacity-0 rounded-lg shadow-xl p-4 mx-6'>
-            <p className='text-priblue w-28 bg-priwhite rounded p-2 text-center font-bold h-10'>
-              Notification
-            </p>
-            <p className='pt-4 overflow-y-auto'>
-              Project ID: 24-124 ADU Permit Package is already submitted. Please
-              check the new status for the project.
-            </p>
-          </Box>
-          <Box className='flex flex-col justify-start items-center  bg-priblue bg-opacity-0 w-1/3 rounded-lg shadow-xl p-4 ml-6'>
-            <p className='text-priblue w-36 bg-priwhite rounded p-2 text-center font-bold h-10'>
-              Current Balance
-            </p>
-            <p className='pt-12 text-4xl font-extrabold text-priblue'>$3,000</p>
-            <div className='mt-auto flex w-full justify-between'>
-              <button className='w-32 text-priblue bg-white rounded border border-priblue px-4 py-2'>
-                Details
-              </button>
-              <button className='w-32 bg-priblue font-bold rounded text-priwhite px-4 py-2'>
-                Pay Now
-              </button>
-            </div>
-          </Box>
-        </div>
+          <div className={labelStyles}>Last Name:</div>
+          <div>
+            <input
+              className={inputStyles}
+              name='lastName'
+              type='text'
+              placeholder={currUser.lastName}
+              onChange={handleUserDataChange}
+            />
+          </div>
 
-        <div className='mt-8 mx-16 mb-4 flex flex-row justify-between items-center'>
-          <h2 className='font-bold text-priblue items-start text-2xl'>
-            Project List
-          </h2>
-          <table className='w-2/3'></table>
-        </div>
-      </PrivateLayout>
-    </div>
+          <div className={labelStyles}>Email:</div>
+          <div>
+            <input
+              className={inputStyles}
+              name='email'
+              type='email'
+              onChange={handleUserDataChange}
+            />
+          </div>
+
+          <div className={labelStyles}>Password:</div>
+          <div>
+            <input
+              className={inputStyles}
+              name='password'
+              type='password'
+              onChange={handleUserDataChange}
+            />
+          </div>
+
+          <div className={labelStyles}>Address:</div>
+          <div>
+            <input
+              className={inputStyles}
+              name='address'
+              type='text'
+              onChange={handleUserDataChange}
+            />
+          </div>
+
+          <div className='flex flex-col justify-center items-center'>
+            <button
+              className='w-fit align-center justify-center bg-priblue text-priwhite text-white border border-priwhite rounded-lg my-10 mt-8 mb-10 p-2'
+              type='submit'
+            >
+              Update Profile
+            </button>
+          </div>
+        </form>
+      </div>
+    </PrivateLayout>
   );
 };
 
