@@ -10,7 +10,7 @@ import Expertice from './subpage/Expertice';
 import Procedure from './subpage/Procedure.js';
 import Contact from './subpage/Contact';
 import Signup from './subpage/Signup';
-import Profile from './subpage/Profile';
+import Dashboard from './subpage/Dashboard';
 import ProjectList from './subpage/ProjectList';
 import Unauthorized from './subpage/Unauthorized';
 
@@ -54,7 +54,7 @@ const App = () => {
         </Route>
 
         <Route element={<RequiredAuth />}>
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/Dashboard' element={<Dashboard />} />
           <Route path='/projectlist' element={<ProjectList />} />
         </Route>
       </Routes>

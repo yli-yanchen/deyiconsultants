@@ -5,7 +5,7 @@ import { Container, Box } from '@mui/material';
 import PrivateLayout from '../components/PrivateLayout';
 import axios from '../hook/axios';
 
-const Profile = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const [currUser, setCurrUser] = useState('');
 
@@ -86,4 +86,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Dashboard;
