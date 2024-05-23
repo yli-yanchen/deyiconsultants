@@ -32,7 +32,7 @@ const Dashboard = () => {
   return (
     <div>
       <PrivateLayout>
-        <div className='mt-8 mx-16 mb-4 flex flex-row justify-between items-center'>
+        <div className='mt-8 mx-16 mb-4 flex flex-row justify-between items-center rounded-lg'>
           <h2 className='font-bold text-priblue items-start text-2xl'>
             Overview
           </h2>
