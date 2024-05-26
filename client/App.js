@@ -42,7 +42,7 @@ const App = () => {
         <Route path='/' element={<RoutesWithNavigation />}>
           <Route index element={<Home />} />
           <Route path='/about' element={<About />} />
-          <Route path='/Procedure' element={<Procedure />} />
+          <Route path='/procedure' element={<Procedure />} />
           <Route path='/expertice' element={<Expertice />} />
           <Route path='/appoitment' element={<Appoitment />} />
           <Route path='/contact' element={<Contact />} />
@@ -55,8 +55,8 @@ const App = () => {
         </Route>
 
         <Route element={<RequiredAuth />}>
-          <Route path='/Dashboard' element={<Dashboard />} />
-          <Route path='/Profile' element={<Profile />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path='/projectlist' element={<ProjectList />} />
         </Route>
       </Routes>

@@ -44,7 +44,12 @@ const Profile = () => {
 
   return (
     <PrivateLayout>
-      <div className='h-full w-1/2 flex flex-col justify-center items-center mx-auto text-priblue border-4 border-priblue shadow-2xl shadow-secwhite rounded-2xl my-10 mt-20 mb-24'>
+      <div className='mt-8 mx-16 mb-4 flex flex-row justify-end items-center'>
+        <button className='h-10 w-32 flex justify-center items-center rounded-full border indent bg-priblue text-base font-bold text-priwhite'>
+          Claim Admin
+        </button>
+      </div>
+      <div className='h-full w-1/2 flex flex-col justify-center items-center mx-auto text-priblue border-4 border-priblue shadow-2xl shadow-secwhite rounded-2xl my-10 mt-10 mb-24'>
         <h2 className='text-2xl font-bold mt-8 mb-4'> </h2>
         <form onSubmit={handleSubmit}>
           <div className={labelStyles}>First Name:</div>

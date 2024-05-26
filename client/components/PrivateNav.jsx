@@ -38,7 +38,9 @@ const PrivateNav = (props) => {
           className='w-6 ml-6 mr-6 font-bold size-14'
           onClick={() => setActiveSideBar(!activeSideBar)}
         />
-        <img className='h-14 w-auto' src={logo} alt='DEYI Logo' />
+        <a href='/dashboard'>
+          <img className='h-14 w-auto' src={logo} alt='DEYI Logo' />
+        </a>
         {/* search function here */}
         <span className='ml-auto mr-12 text-priblue'>
           Hi, {props.user.firstName}
@@ -54,7 +56,7 @@ const PrivateNav = (props) => {
                 onClick={() => setActiveSideBar(false)}
               />
               <div className='flex flex-col justify-between items-center mt-40'>
-                <Link to='/profile' className='items-center'>
+                <Link to='/dashboard' className='items-center'>
                   <span
                     className={`flex items-center justify-center top-4 font-bold rounded-full h-16 w-16 bg-thdwhite text-priblue ${
                       props.user.firstName.length <= 6
