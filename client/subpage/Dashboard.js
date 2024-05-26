@@ -3,31 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Box } from '@mui/material';
 
 import PrivateLayout from '../components/PrivateLayout';
-import axios from '../hook/axios';
+import useAuth from '../hook/useAuth';
+import { RollerShades } from '@mui/icons-material';
+import Loading from './Loading';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [currUser, setCurrUser] = useState('');
+  const { auth, loading, user } = useAuth();
 
   useEffect(() => {
-    const userid = localStorage.getItem('userid');
-    const fetchUserData = async () => {
-      try {
-        const getuserdata = await axios.get('/api/profile/getuser', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userid}`,
-          },
-        });
-        setCurrUser(getuserdata.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
+    console.log('>>> get auth information: ', auth, loading, user);
+    if (!loading && !auth) {
+      navigate('/login');
+    }
+  }, [auth, loading, navigate]);
 
-    fetchUserData();
-  }, [navigate]);
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>

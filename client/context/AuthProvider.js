@@ -1,15 +1,47 @@
-import React, {createContext, useState} from "react";
+import React, { createContext, useState, useEffect } from 'react';
+import AuthContext from './AuthContext';
+import axios from '../hook/axios';
 
-const AuthContext = createContext();
+const AuthProvider = ({ children }) => {
+  const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-export const AuthProvider = ({children}) => {
-    const [auth, setAuth] = useState({});
+  useEffect(() => {
+    const userid = localStorage.getItem('userid');
+    if (!userid) {
+      setLoading(false);
+      return;
+    }
 
-    return (
-        <AuthContext.Provider value={{auth, setAuth}} >
-            {children}
-        </AuthContext.Provider>
-    )
+    const fetchUserData = async () => {
+      try {
+        const getuserdata = await axios.get('/api/profile/getuser', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userid}`,
+          },
+        });
+        setAuth(true);
+        setUser(getuserdata.data);
+        console.log('AuthProvider state:', { auth, loading, user });
+      } catch (error) {
+        setAuth(false);
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ auth, loading, user }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export default AuthContext;
+export default AuthProvider;

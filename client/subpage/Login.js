@@ -3,14 +3,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from '../hook/axios';
-import useAuth from '../hook/useAuth';
 import homeImage from '../../docs/assets/images/homepagePicNoText.png';
 
 const Login = () => {
   const navigate = useNavigate();
   const clientID = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID;
 
-  const { setAuth } = useAuth();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
 
@@ -43,7 +41,6 @@ const Login = () => {
         setCookies('accessToken', loginres.data.accessToken);
         window.localStorage.setItem('userid', userid);
         window.localStorage.setItem('accessToken', loginres.data.accessToken);
-        setAuth(true);
         navigate('/Dashboard');
         // navigate(from, { replace: true }); // go back from where you come.
       } else {

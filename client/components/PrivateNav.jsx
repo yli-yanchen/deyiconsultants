@@ -11,6 +11,10 @@ const PrivateNav = (props) => {
   const [menu, setMenu] = useState('');
   const [activeSideBar, setActiveSideBar] = useState(false);
 
+  useEffect(() => {
+    console.log('>>> user in the PrivateNav', props);
+  }, []);
+
   // const navigate = useNavigate();
   const handleLogout = async () => {
     try {
@@ -42,9 +46,14 @@ const PrivateNav = (props) => {
           <img className='h-14 w-auto' src={logo} alt='DEYI Logo' />
         </a>
         {/* search function here */}
-        <span className='ml-auto mr-12 text-priblue'>
-          Hi, {props.user.firstName}
-        </span>
+        {props.user.firstName && (
+          <span className='ml-auto mr-12 text-priblue'>
+            Hi,{' '}
+            {props.user.firstName.length > 6
+              ? props.user.firstName
+              : props.user.firstName.slice(0, 6)}
+          </span>
+        )}
       </div>
 
       <div>

@@ -1,52 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, Navigate, Outlet } from "react-router-dom";
-import useAuth from "../hook/useAuth";
-import axios from "../hook/axios";
-import Loading from "../subpage/Loading";
+import { useEffect } from 'react';
+import React, { useContext } from 'react';
+import { useLocation, Navigate, Outlet } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
+import Loading from '../subpage/Loading';
 
 const RequiredAuth = () => {
-  const { auth } = useAuth();
   const location = useLocation();
-  const [loading, setLoading] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const verifyToken = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        const userid = localStorage.getItem('userid');
-        const config = {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            userid: userid,
-          },
-          credentials: "include",
-        };
-
-        const authorizedUser = await axios.get(
-          "http://localhost:3000/api/auth",
-          config
-        );
-        if (authorizedUser) setLoggedIn(true);
-      } catch (error) {
-        setLoggedIn(false);
-        setLoading(false);
-        console.log("Error authorizing user: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    verifyToken();
-  }, []);
+  const { auth, loading, user } = useContext(AuthContext);
 
   if (loading) {
     return <Loading />;
   }
 
-  return loggedIn ? (
+  useEffect(() => {
+    console.log(
+      '>>> auth, loading, user in requiredAuth: ',
+      auth,
+      loading,
+      user
+    );
+  });
+
+  return auth ? (
     <Outlet />
   ) : (
-    <Navigate to="/unauthorized" state={{ from: location }} replace />
+    <Navigate to='/unauthorized' state={{ from: location }} replace />
   );
 };
 
