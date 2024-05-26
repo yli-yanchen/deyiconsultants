@@ -31,11 +31,6 @@ const RoutesWithNavigation = () => {
 };
 
 const App = () => {
-  const ROLE = {
-    ADMIN: 'admin',
-    BASIC: 'basic',
-  };
-
   return (
     <main>
       <Routes>
