@@ -5,20 +5,21 @@ import { Container, Box } from '@mui/material';
 import PrivateLayout from '../components/PrivateLayout';
 import useAuth from '../hook/useAuth';
 import { RollerShades } from '@mui/icons-material';
+import Loading from './Loading';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { auth, loading, user } = useAuth();
 
   useEffect(() => {
-    // console.log('>>> get auth information: ', auth, loading, user, role);
+    console.log('>>> get auth information: ', auth, loading, user);
     if (!loading && !auth) {
       navigate('/login');
     }
   }, [auth, loading, navigate]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (
