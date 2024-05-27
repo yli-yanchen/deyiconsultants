@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import axios from '../hook/axios';
+import useAuth from '../hook/useAuth';
 
 const FromModal = ({ setModal }) => {
+  const { user } = useAuth();
+  const [errorLabel, setErrorLabel] = useState(<></>);
   const [proDetail, setProDetail] = useState({
     ID: '',
     Name: '',
     Address: '',
     City: '',
-    Client: '',
+    ClientFirstName: '',
+    ClientLastName: '',
     ProjectType: '',
     StartDate: '',
     EndDate: '',
@@ -20,18 +24,7 @@ const FromModal = ({ setModal }) => {
   const handleChange = (e) => {
     setProDetail({
       ...proDetail,
-      ID: e.target.ID,
-      Name: e.target.Name,
-      Address: e.target.Address,
-      City: e.target.City,
-      Client: e.target.Client,
-      ProjectType: e.target.ProjectType,
-      StartDate: e.target.StartDate,
-      EndDate: e.target.EndDate,
-      Status: e.target.Status,
-      ContractAmount: e.target.ContractAmount,
-      Reimbersement: e.target.Reimbersement,
-      PaidAmount: e.target.PaidAmount,
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -42,9 +35,32 @@ const FromModal = ({ setModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(proDetail);
+    console.log('>>> new project information: ', proDetail);
+    console.log('>>> user from useAuth in FormModel: ', user);
 
-    // const newProject = await axios.post('/api/profile/newproject', proDetail);
+    try {
+      const newProject = await axios.post('/api/profile/newproject', {
+        ...proDetail,
+        user: {
+          id: user._id,
+          role: user.role,
+        },
+      });
+
+      if (newProject.data && newProject.data.err) {
+        setErrorLabel(newProject.data.err);
+        console.log('>>> error: ', newProject.data.err);
+        return;
+      } else if (newProject && newProject.data.project) {
+        console.log('>>> new project: ', newProject.data.project);
+      }
+    } catch (error) {
+      console.log(
+        '>>> Error in axios.post(/project/new): ',
+        err.response?.data || err.message
+      );
+      setErrorLabel('An error occurred. Please try again later.');
+    }
 
     setModal(false);
   };
@@ -70,7 +86,7 @@ const FromModal = ({ setModal }) => {
         <input
           type='text'
           name='Name'
-          placeholder='Name'
+          placeholder='Project Name'
           value={proDetail.Name}
           onChange={handleChange}
           className={inputStyle}
@@ -93,9 +109,17 @@ const FromModal = ({ setModal }) => {
         />
         <input
           type='text'
-          name='Client'
-          placeholder='Client'
-          value={proDetail.Client}
+          name='ClientFirstName'
+          placeholder='First Name'
+          value={proDetail.ClientFirstName}
+          onChange={handleChange}
+          className={inputStyle}
+        />
+        <input
+          type='text'
+          name='ClientLastName'
+          placeholder='Last Name'
+          value={proDetail.ClientLastName}
           onChange={handleChange}
           className={inputStyle}
         />

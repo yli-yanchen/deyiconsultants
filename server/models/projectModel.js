@@ -11,7 +11,8 @@ const projectSchema = new Schema(
     Name: { type: String, required: true },
     Address: { type: String, required: true },
     City: { type: String, required: true },
-    Client: { type: String, required: true },
+    ClientFirstName: { type: String, required: true },
+    ClientLastName: { type: String, required: true },
     ProjectType: { type: String, required: true },
     StartDate: { type: Date },
     EndDate: { type: Date },
@@ -21,6 +22,9 @@ const projectSchema = new Schema(
     Reimbersement: { type: Number },
     PaidAmount: { type: Number },
     BalanceAmount: { type: Number },
+
+    CreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    ClientID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
     Document: [
       {

@@ -41,6 +41,41 @@ profileController.getuser = async (req, res, next) => {
   }
 };
 
+profileController.checkClient = async (req, res, next) => {
+  try {
+    if (
+      !req.body.proDetail.ClientFirstName ||
+      !req.body.proDetail.ClientLastName
+    ) {
+      const missedClient = {
+        log: 'Express error handler caught profileController.checkClient error - missedClient',
+        status: 501,
+        message: {
+          err: 'Missed client information.',
+        },
+      };
+      return next(missedClient);
+    }
+
+    const clientid = await userModel.User.findOne({
+      firstName: req.body.proDetail.ClientFirstName,
+      lastName: req.body.proDetail.ClientLastName,
+    });
+    console.log('>>> client information: ', clientid._id);
+    res.locals.clientid = clientid._id;
+    return next();
+  } catch (err) {
+    const missedClient = {
+      log: 'Express error handler caught profileController.checkClient error - missedClient',
+      status: 501,
+      message: {
+        err: 'Cannot get client from db.',
+      },
+    };
+    return next(missedClient);
+  }
+};
+
 profileController.newProject = async (req, res, next) => {
   try {
     const {
@@ -48,7 +83,8 @@ profileController.newProject = async (req, res, next) => {
       Name,
       Address,
       City,
-      Client,
+      ClientFirstName,
+      ClientLastName,
       ProjectType,
       StartDate,
       EndDate,
@@ -56,32 +92,60 @@ profileController.newProject = async (req, res, next) => {
       ContractAmount,
       Reimbersement,
       PaidAmount,
-    } = req.body;
+    } = req.body.proDetail;
     if (
       !ID ||
       !Name ||
       !Address ||
       !City ||
-      !Client ||
-      !ProjectType ||
-      !StartDate ||
-      !Status ||
       !ContractAmount ||
       !Reimbersement ||
       !PaidAmount
     ) {
-      return next(
-        'Error in profileController.newProject: Missing required fields'
-      );
+      const missedFieldErr = {
+        log: 'Express error handler caught profileController.newProject error',
+        status: 406,
+        message: {
+          err: 'Missed fileds in the project details',
+        },
+      };
+      return next(missedFieldErr);
     }
 
-    const newProject = await projectModel.Project.create(req.body);
+    const BalanceAmount = ContractAmount + Reimbersement - PaidAmount;
+    const CreatedBy = req.body.user.id;
+    console.log('>>> createdby in the newproject api: ', CreatedBy);
+
+    const projectData = {
+      ID: ID,
+      Name: Name,
+      Address: Address,
+      City: City,
+      ClientFirstName: ClientFirstName,
+      ClientLastName: ClientLastName,
+      ProjectType: ProjectType,
+      StartDate: StartDate,
+      EndDate: EndDate,
+      Status: Status,
+
+      ContractAmount: ContractAmount,
+      Reimbersement: Reimbersement,
+      PaidAmount: PaidAmount,
+      BalanceAmount: BalanceAmount,
+
+      CreatedBy: CreatedBy,
+      ClientID: res.locals.clientid,
+    };
+
+    console.log('>>> project ready to db: ', projectData);
+
+    const newProject = await projectModel.Project.create(projectData);
     res.locals.project = newProject;
     return next();
   } catch (err) {
     const createProjectDBError = {
-      log: 'Express error handler caught profileController.newProject error',
-      status: 500,
+      log: 'Express error handler caught profileController.newProject in DB error',
+      status: 502,
       message: {
         err: 'New project cannot be created in the database for some reason',
       },
