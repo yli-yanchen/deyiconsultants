@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import React, { useContext } from 'react';
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
@@ -12,16 +11,7 @@ const RequiredAuth = () => {
     return <Loading />;
   }
 
-  useEffect(() => {
-    console.log(
-      '>>> auth, loading, user in requiredAuth: ',
-      auth,
-      loading,
-      user
-    );
-  });
-
-  return auth ? (
+  return auth && user ? (
     <Outlet />
   ) : (
     <Navigate to='/unauthorized' state={{ from: location }} replace />

@@ -40,7 +40,7 @@ const FromModal = ({ setModal }) => {
 
     try {
       const newProject = await axios.post('/api/profile/newproject', {
-        ...proDetail,
+        proDetail,
         user: {
           id: user._id,
           role: user.role,
@@ -54,7 +54,7 @@ const FromModal = ({ setModal }) => {
       } else if (newProject && newProject.data.project) {
         console.log('>>> new project: ', newProject.data.project);
       }
-    } catch (error) {
+    } catch (err) {
       console.log(
         '>>> Error in axios.post(/project/new): ',
         err.response?.data || err.message
@@ -179,6 +179,7 @@ const FromModal = ({ setModal }) => {
           onChange={handleChange}
           className={inputStyle}
         />
+        <label className='text-red-500'>{errorLabel}</label>
         <div className='flex flex-row justify-between mb-24 text-base font-base p-4 pb-8'>
           <button
             type='button'

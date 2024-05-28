@@ -43,10 +43,13 @@ profileController.getuser = async (req, res, next) => {
 
 profileController.checkClient = async (req, res, next) => {
   try {
-    if (
-      !req.body.proDetail.ClientFirstName ||
-      !req.body.proDetail.ClientLastName
-    ) {
+    const { proDetail } = req.body;
+    console.log('>>> from req.body: ', proDetail);
+    const { ClientFirstName, ClientLastName } = proDetail;
+    console.log('>>> client first name: ', ClientFirstName);
+    console.log('>>> client last name: ', ClientLastName);
+
+    if (!ClientFirstName || !ClientLastName) {
       const missedClient = {
         log: 'Express error handler caught profileController.checkClient error - missedClient',
         status: 501,
@@ -58,15 +61,16 @@ profileController.checkClient = async (req, res, next) => {
     }
 
     const clientid = await userModel.User.findOne({
-      firstName: req.body.proDetail.ClientFirstName,
-      lastName: req.body.proDetail.ClientLastName,
+      firstName: ClientFirstName,
+      lastName: ClientLastName,
     });
+
     console.log('>>> client information: ', clientid._id);
     res.locals.clientid = clientid._id;
     return next();
   } catch (err) {
     const missedClient = {
-      log: 'Express error handler caught profileController.checkClient error - missedClient',
+      log: 'Express error handler caught profileController.checkClient error - unknown reaosn',
       status: 501,
       message: {
         err: 'Cannot get client from db.',
