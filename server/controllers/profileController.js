@@ -65,7 +65,17 @@ profileController.checkClient = async (req, res, next) => {
       lastName: ClientLastName,
     });
 
-    console.log('>>> client information: ', clientid._id);
+    if (!clientid) {
+      const needNewClient = {
+        log: 'No existing client in the database',
+        status: 204,
+        message: {
+          err: 'Not exist, create new client.',
+        },
+      };
+      return next(needNewClient);
+    }
+
     res.locals.clientid = clientid._id;
     return next();
   } catch (err) {

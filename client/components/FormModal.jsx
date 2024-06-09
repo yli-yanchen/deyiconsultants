@@ -35,8 +35,6 @@ const FromModal = ({ setModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('>>> new project information: ', proDetail);
-    console.log('>>> user from useAuth in FormModel: ', user);
 
     try {
       const newProject = await axios.post('/api/profile/newproject', {
@@ -46,23 +44,21 @@ const FromModal = ({ setModal }) => {
           role: user.role,
         },
       });
+      console.log('>>> newProject: ', newProject);
 
       if (newProject.data && newProject.data.err) {
-        setErrorLabel(newProject.data.err);
-        console.log('>>> error: ', newProject.data.err);
+        setErrorLabel(newProject.data.err.message);
+        console.log('>>> error: ', newProject.data.err.message);
         return;
       } else if (newProject && newProject.data.project) {
+        setModal(false);
         console.log('>>> new project: ', newProject.data.project);
       }
     } catch (err) {
-      console.log(
-        '>>> Error in axios.post(/project/new): ',
-        err.response?.data || err.message
-      );
-      setErrorLabel('An error occurred. Please try again later.');
+      const errorMessage = err.response?.data?.err || err.message;
+      console.log('>>> Error in axios.post(/project/new): ', errorMessage);
+      setErrorLabel(errorMessage);
     }
-
-    setModal(false);
   };
 
   const inputStyle =
