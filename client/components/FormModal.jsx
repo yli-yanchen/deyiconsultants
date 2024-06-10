@@ -194,6 +194,7 @@ const FromModal = ({ setModal }) => {
           className={inputStyle}
         />
         <h3 className='text-md font-bold mt-4'>Engineer Details</h3>
+        {/* should be in the select list */}
         <input
           type='text'
           name='Name'

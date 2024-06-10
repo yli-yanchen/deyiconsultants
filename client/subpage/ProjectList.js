@@ -23,6 +23,19 @@ const ProjectList = () => {
     openForm();
   };
 
+  useEffect(() => {
+    const fetchProjectData = async () => {
+      try {
+        const response = await axios.get('/api/profile/getproject');
+        console.log('*** project from the data: ', response.data);
+      } catch (err) {
+        console.error('*** cannot get the project list', err);
+      }
+    };
+
+    fetchProjectData();
+  }, []);
+
   return (
     <PrivateLayout>
       {user.role === 'admin' && (
