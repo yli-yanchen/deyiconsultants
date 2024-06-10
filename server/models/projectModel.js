@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const dotenv = require('dotenv');
 const User = require('./userModel');
-const { date } = require('joi');
+const { date, types } = require('joi');
 dotenv.config();
 
 const projectSchema = new Schema(
@@ -11,16 +11,35 @@ const projectSchema = new Schema(
     Name: { type: String, required: true },
     Address: { type: String, required: true },
     City: { type: String, required: true },
-    Client: { type: String, required: true },
+    ClientFirstName: { type: String, required: true },
+    ClientLastName: { type: String, required: true },
     ProjectType: { type: String, required: true },
     StartDate: { type: Date },
     EndDate: { type: Date },
     Status: { type: String, required: true },
 
-    ContractAmount: { type: Number },
-    Reimbersement: { type: Number },
-    PaidAmount: { type: Number },
-    BalanceAmount: { type: Number },
+    ContractAmount: { type: Number, required: true },
+    Reimbersement: { type: Number, required: true },
+    IncomingAmount: { type: Number, required: true },
+    BalanceAmount: { type: Number, required: true },
+
+    Engineer: [
+      {
+        Name: { type: String, required: true, default: 'Jeff' },
+        OutcomingAmount: { type: Number, required: true, default: 0 },
+        Deadline: {
+          type: Date,
+          required: true,
+          default: function () {
+            return this.StartDate;
+          },
+        },
+      },
+    ],
+
+    CreatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    ClientID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    EngineerID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
     Document: [
       {

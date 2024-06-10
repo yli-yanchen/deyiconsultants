@@ -13,6 +13,7 @@ console.log(
 const ROLE = {
   ADMIN: 'admin',
   BASIC: 'basic',
+  WORKER: 'engineer',
 };
 
 const userSchema = new Schema({
@@ -21,7 +22,11 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   address: { type: String },
-  role: { type: String, enum: [ROLE.ADMIN, ROLE.BASIC], default: ROLE.BASIC },
+  role: {
+    type: String,
+    enum: [ROLE.ADMIN, ROLE.BASIC, ROLE.WORKER],
+    default: ROLE.BASIC,
+  },
   refreshToken: { type: [String] },
   projectid: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
 });

@@ -8,9 +8,18 @@ router.get('/getuser', profileController.getuser, (req, res) => {
 
 router.post(
   '/newproject',
-  authControllers.verifyToken,
-  // authControllers.verifyAdmin,
-  // profileController.newProject,
+  authControllers.verifyAdmin,
+  profileController.checkClient,
+  profileController.newProject,
+  (req, res) => {
+    res.status(200).json('successful');
+  }
+);
+
+router.get(
+  '/getproject',
+  profileController.getuser,
+  profileController.getproject,
   (req, res) => {
     res.status(200).json(res.locals.project);
   }

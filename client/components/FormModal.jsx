@@ -1,37 +1,46 @@
 import React, { useState } from 'react';
 import axios from '../hook/axios';
+import useAuth from '../hook/useAuth';
 
 const FromModal = ({ setModal }) => {
+  const { user } = useAuth();
+  const [errorLabel, setErrorLabel] = useState(<></>);
   const [proDetail, setProDetail] = useState({
     ID: '',
     Name: '',
     Address: '',
     City: '',
-    Client: '',
+    ClientFirstName: '',
+    ClientLastName: '',
     ProjectType: '',
     StartDate: '',
     EndDate: '',
     Status: '',
     ContractAmount: '',
     Reimbersement: '',
-    PaidAmount: '',
+    IncomingAmount: '',
+    Engineer: {
+      Name: '',
+      OutcomingAmount: '',
+      Deadline: '',
+    },
   });
 
   const handleChange = (e) => {
     setProDetail({
       ...proDetail,
-      ID: e.target.ID,
-      Name: e.target.Name,
-      Address: e.target.Address,
-      City: e.target.City,
-      Client: e.target.Client,
-      ProjectType: e.target.ProjectType,
-      StartDate: e.target.StartDate,
-      EndDate: e.target.EndDate,
-      Status: e.target.Status,
-      ContractAmount: e.target.ContractAmount,
-      Reimbersement: e.target.Reimbersement,
-      PaidAmount: e.target.PaidAmount,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEngineerChange = (e) => {
+    const { name, value } = e.target;
+    setProDetail({
+      ...proDetail,
+      Engineer: {
+        ...proDetail.Engineer,
+        [name]: value,
+      },
     });
   };
 
@@ -42,11 +51,30 @@ const FromModal = ({ setModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(proDetail);
 
-    // const newProject = await axios.post('/api/profile/newproject', proDetail);
+    try {
+      const newProject = await axios.post('/api/profile/newproject', {
+        proDetail,
+        user: {
+          id: user._id,
+          role: user.role,
+        },
+      });
+      console.log('>>> newProject: ', newProject);
 
-    setModal(false);
+      if (newProject.data && newProject.data.err) {
+        setErrorLabel(newProject.data.err.message);
+        console.log('>>> error: ', newProject.data.err.message);
+        return;
+      }
+
+      setModal(false);
+      console.log('>>> new project: ', newProject.data.project);
+    } catch (err) {
+      const errorMessage = err.response?.data?.err || err.message;
+      console.log('>>> Error in axios.post(/project/new): ', errorMessage);
+      setErrorLabel(errorMessage);
+    }
   };
 
   const inputStyle =
@@ -58,7 +86,8 @@ const FromModal = ({ setModal }) => {
         onSubmit={handleSubmit}
         className='h-4/6 w-1/2 flex flex-col align-middle items-center bg-priblue text-priwhite font-normal text-sm space-y-4 overflow-y-auto rounded-3xl'
       >
-        <h2 className='text-lg font-bold mt-8 mb-4'> Create New Project </h2>
+        <h2 className='text-lg font-bold mt-8 mb-2'> Create New Project </h2>
+        <h3 className='text-md font-bold mt-2'>Project Details</h3>
         <input
           type='text'
           name='ID'
@@ -70,7 +99,7 @@ const FromModal = ({ setModal }) => {
         <input
           type='text'
           name='Name'
-          placeholder='Name'
+          placeholder='Project Name'
           value={proDetail.Name}
           onChange={handleChange}
           className={inputStyle}
@@ -93,9 +122,17 @@ const FromModal = ({ setModal }) => {
         />
         <input
           type='text'
-          name='Client'
-          placeholder='Client'
-          value={proDetail.Client}
+          name='ClientFirstName'
+          placeholder='First Name'
+          value={proDetail.ClientFirstName}
+          onChange={handleChange}
+          className={inputStyle}
+        />
+        <input
+          type='text'
+          name='ClientLastName'
+          placeholder='Last Name'
+          value={proDetail.ClientLastName}
           onChange={handleChange}
           className={inputStyle}
         />
@@ -131,6 +168,7 @@ const FromModal = ({ setModal }) => {
           onChange={handleChange}
           className={inputStyle}
         />
+        <h3 className='text-md font-bold mt-4'>Payment Details</h3>
         <input
           type='number'
           name='ContractAmount'
@@ -149,12 +187,39 @@ const FromModal = ({ setModal }) => {
         />
         <input
           type='number'
-          name='PaidAmount'
-          placeholder='Paid Amount'
-          value={proDetail.PaidAmount}
+          name='IncomingAmount'
+          placeholder='Client Paid Amount'
+          value={proDetail.IncomingAmount}
           onChange={handleChange}
           className={inputStyle}
         />
+        <h3 className='text-md font-bold mt-4'>Engineer Details</h3>
+        {/* should be in the select list */}
+        <input
+          type='text'
+          name='Name'
+          placeholder='Engineer Name'
+          value={proDetail.Engineer.Name}
+          onChange={handleEngineerChange}
+          className={inputStyle}
+        />
+        <input
+          type='number'
+          name='OutcomingAmount'
+          placeholder='Outgoing Amount'
+          value={proDetail.Engineer.OutcomingAmount}
+          onChange={handleEngineerChange}
+          className={inputStyle}
+        />
+        <input
+          type='date'
+          name='Deadline'
+          placeholder='Deadline'
+          value={proDetail.Engineer.Deadline}
+          onChange={handleEngineerChange}
+          className={inputStyle}
+        />
+        <label className='text-red-500'>{errorLabel}</label>
         <div className='flex flex-row justify-between mb-24 text-base font-base p-4 pb-8'>
           <button
             type='button'
@@ -166,6 +231,7 @@ const FromModal = ({ setModal }) => {
           <button
             type='submit'
             className='w-24 bg-priwhite text-white p-2 mx-8 border border-priwhite rounded-lg text-priblue'
+            onClick={handleSubmit}
           >
             Submit
           </button>

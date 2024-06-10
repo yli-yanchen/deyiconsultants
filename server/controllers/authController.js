@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const model = require("../models/userModel");
-require("dotenv").config();
+const jwt = require('jsonwebtoken');
+const model = require('../models/userModel');
+require('dotenv').config();
 
 const authControllers = {};
 
@@ -14,8 +14,8 @@ authControllers.generateToken = async (req, res, next) => {
       },
       process.env.TOKEN_SECRET,
       {
-        algorithm: "HS256",
-        expiresIn: "10m",
+        algorithm: 'HS256',
+        expiresIn: '10m',
       }
     );
 
@@ -27,12 +27,12 @@ authControllers.generateToken = async (req, res, next) => {
       },
       process.env.REFRESH_TOKEN,
       {
-        algorithm: "HS256",
-        expiresIn: "1h",
+        algorithm: 'HS256',
+        expiresIn: '1h',
       }
     );
 
-    res.cookie("accessToken", accessToken);
+    res.cookie('accessToken', accessToken);
     res.locals.accessToken = accessToken;
 
     let newRefreshTokenArray;
@@ -44,12 +44,12 @@ authControllers.generateToken = async (req, res, next) => {
       }).exec();
 
       if (!foundToken) {
-        console.log("attempted refresh token reuse at login!");
+        console.log('attempted refresh token reuse at login!');
         // clear out ALL previous refresh tokens
         newRefreshTokenArray = [];
-        res.clearCookie("refreshToken", {
+        res.clearCookie('refreshToken', {
           httpOnly: true,
-          sameSite: "None",
+          sameSite: 'None',
           secure: true,
         });
       }
@@ -64,32 +64,32 @@ authControllers.generateToken = async (req, res, next) => {
       { refreshToken: newRefreshTokenArray },
       { new: true }
     );
-    console.log(">>> check if the refreshToken in the db: ", result);
+    console.log('>>> check if the refreshToken in the db: ', result);
 
-    res.cookie("refreshToken", refreshToken, {
+    res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: 'None',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.locals.refreshToken = refreshToken;
     return next();
   } catch (err) {
     return next(
-      "Error in authControllers.generateToken: " + JSON.stringify(err)
+      'Error in authControllers.generateToken: ' + JSON.stringify(err)
     );
   }
 };
 
 authControllers.verifyToken = async (req, res, next) => {
   try {
-    const accessToken = req.headers.authorization.split(" ")[1];
-    console.log(">>> accessToken from header: ", accessToken);
+    const accessToken = req.headers.authorization.split(' ')[1];
+    console.log('>>> accessToken from header: ', accessToken);
     if (!accessToken) {
       const notoken = {
-        log: "Express error handler caught authControllers.verifyToken error",
+        log: 'Express error handler caught authControllers.verifyToken error',
         status: 401,
-        message: { err: "No Token Found" },
+        message: { err: 'No Token Found' },
       };
       return next(notoken);
     }
@@ -99,7 +99,7 @@ authControllers.verifyToken = async (req, res, next) => {
     res.locals.user = foundUser;
 
     const refreshTokens = foundUser.refreshToken;
-    console.log(">>> refreshToken saved in db: ", refreshTokens);
+    console.log('>>> refreshToken saved in db: ', refreshTokens);
 
     // if there is token then verify its token
     jwt.verify(
@@ -107,9 +107,9 @@ authControllers.verifyToken = async (req, res, next) => {
       process.env.TOKEN_SECRET,
       async (err, decodedAccessToken) => {
         if (err) {
-          if (err.name === "TokenExpiredError") {
+          if (err.name === 'TokenExpiredError') {
             // verify the refresh token, if expire, then reassign.
-            console.log("The token is expired.");
+            console.log('The token is expired.');
 
             if (!refreshTokens || refreshTokens.length === 0) {
               foundUser.refreshToken = refreshTokens; // Assuming you want to keep it as it is
@@ -135,15 +135,15 @@ authControllers.verifyToken = async (req, res, next) => {
                     },
                     process.env.TOKEN_SECRET,
                     {
-                      algorithm: "HS256",
-                      expiresIn: "10m",
+                      algorithm: 'HS256',
+                      expiresIn: '10m',
                     }
                   );
                   foundUser.refreshToken = [...refreshTokens, newAccessToken];
-                  res.cookie("accessToken", newAccessToken, {
+                  res.cookie('accessToken', newAccessToken, {
                     httpOnly: true,
                     secure: true,
-                    sameSite: "None",
+                    sameSite: 'None',
                     maxAge: 24 * 60 * 60 * 1000,
                   });
                 }
@@ -166,7 +166,16 @@ authControllers.verifyToken = async (req, res, next) => {
       }
     );
   } catch (err) {
-    return next("Error in authControllers.verifyToken: " + JSON.stringify(err));
+    return next('Error in authControllers.verifyToken: ' + JSON.stringify(err));
+  }
+};
+
+authControllers.verifyAdmin = async (req, res, next) => {
+  console.log('>>> authControllers.verifyAdmin: ', req.body.user);
+  if (req.body.user.role !== 'admin') {
+    return next('You are not authorized to perform this action');
+  } else {
+    return next();
   }
 };
 
