@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   alpha,
@@ -25,6 +25,7 @@ import {
   FilterList as FilterListIcon,
 } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
+import axios from '../hook/axios';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -53,3 +54,45 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
+
+const ProjectTable = () => {
+  const [project, setProject] = useState([]);
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
+
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
+  useEffect(async () => {
+    try {
+      const response = await axios.get('/api/');
+    } catch (err) {
+      console.error('>>> fetch project data fails: ', err);
+    }
+  });
+
+  return (
+    <TableHead>
+      <TableCell>
+        <Checkbox
+          color='priblue'
+          indeterminate={numSelected > 0 && numSelected < rowCount}
+          checked={rowCount > 0 && numSelected === rowCount}
+          onChange={onSelectAllClick}
+          inputProps={{
+            'aria-label': 'select all desserts',
+          }}
+        />
+      </TableCell>
+    </TableHead>
+  );
+};
+
+export default ProjectTable;

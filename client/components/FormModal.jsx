@@ -18,13 +18,29 @@ const FromModal = ({ setModal }) => {
     Status: '',
     ContractAmount: '',
     Reimbersement: '',
-    PaidAmount: '',
+    IncomingAmount: '',
+    Engineer: {
+      Name: '',
+      OutcomingAmount: '',
+      Deadline: '',
+    },
   });
 
   const handleChange = (e) => {
     setProDetail({
       ...proDetail,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEngineerChange = (e) => {
+    const { name, value } = e.target;
+    setProDetail({
+      ...proDetail,
+      Engineer: {
+        ...proDetail.Engineer,
+        [name]: value,
+      },
     });
   };
 
@@ -50,10 +66,10 @@ const FromModal = ({ setModal }) => {
         setErrorLabel(newProject.data.err.message);
         console.log('>>> error: ', newProject.data.err.message);
         return;
-      } else if (newProject && newProject.data.project) {
-        setModal(false);
-        console.log('>>> new project: ', newProject.data.project);
       }
+
+      setModal(false);
+      console.log('>>> new project: ', newProject.data.project);
     } catch (err) {
       const errorMessage = err.response?.data?.err || err.message;
       console.log('>>> Error in axios.post(/project/new): ', errorMessage);
@@ -70,7 +86,8 @@ const FromModal = ({ setModal }) => {
         onSubmit={handleSubmit}
         className='h-4/6 w-1/2 flex flex-col align-middle items-center bg-priblue text-priwhite font-normal text-sm space-y-4 overflow-y-auto rounded-3xl'
       >
-        <h2 className='text-lg font-bold mt-8 mb-4'> Create New Project </h2>
+        <h2 className='text-lg font-bold mt-8 mb-2'> Create New Project </h2>
+        <h3 className='text-md font-bold mt-2'>Project Details</h3>
         <input
           type='text'
           name='ID'
@@ -151,6 +168,7 @@ const FromModal = ({ setModal }) => {
           onChange={handleChange}
           className={inputStyle}
         />
+        <h3 className='text-md font-bold mt-4'>Payment Details</h3>
         <input
           type='number'
           name='ContractAmount'
@@ -169,10 +187,35 @@ const FromModal = ({ setModal }) => {
         />
         <input
           type='number'
-          name='PaidAmount'
-          placeholder='Paid Amount'
-          value={proDetail.PaidAmount}
+          name='IncomingAmount'
+          placeholder='Client Paid Amount'
+          value={proDetail.IncomingAmount}
           onChange={handleChange}
+          className={inputStyle}
+        />
+        <h3 className='text-md font-bold mt-4'>Engineer Details</h3>
+        <input
+          type='text'
+          name='Name'
+          placeholder='Engineer Name'
+          value={proDetail.Engineer.Name}
+          onChange={handleEngineerChange}
+          className={inputStyle}
+        />
+        <input
+          type='number'
+          name='OutcomingAmount'
+          placeholder='Outgoing Amount'
+          value={proDetail.Engineer.OutcomingAmount}
+          onChange={handleEngineerChange}
+          className={inputStyle}
+        />
+        <input
+          type='date'
+          name='Deadline'
+          placeholder='Deadline'
+          value={proDetail.Engineer.Deadline}
+          onChange={handleEngineerChange}
           className={inputStyle}
         />
         <label className='text-red-500'>{errorLabel}</label>
@@ -187,6 +230,7 @@ const FromModal = ({ setModal }) => {
           <button
             type='submit'
             className='w-24 bg-priwhite text-white p-2 mx-8 border border-priwhite rounded-lg text-priblue'
+            onClick={handleSubmit}
           >
             Submit
           </button>

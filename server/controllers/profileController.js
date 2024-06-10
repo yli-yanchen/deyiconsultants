@@ -64,6 +64,7 @@ profileController.checkClient = async (req, res, next) => {
       firstName: ClientFirstName,
       lastName: ClientLastName,
     });
+    // console.log('>>> find client in the database: ', clientid);
 
     if (!clientid) {
       const needNewClient = {
@@ -77,10 +78,11 @@ profileController.checkClient = async (req, res, next) => {
     }
 
     res.locals.clientid = clientid._id;
+    // console.log('>>> clientid: ', clientid._id);
     return next();
   } catch (err) {
     const missedClient = {
-      log: 'Express error handler caught profileController.checkClient error - unknown reaosn',
+      log: 'Express error handler caught profileController.checkClient error - unknown reason',
       status: 501,
       message: {
         err: 'Cannot get client from db.',
@@ -105,16 +107,30 @@ profileController.newProject = async (req, res, next) => {
       Status,
       ContractAmount,
       Reimbersement,
-      PaidAmount,
+      IncomingAmount,
+      Engineer,
     } = req.body.proDetail;
+    console.log('>>> req.body.proDetail in newProject: ', req.body.proDetail);
+
+    const contractAmount = Number(ContractAmount) || 0;
+    const reimbersement = Number(Reimbersement) || 0;
+    const incomingAmount = Number(IncomingAmount) || 0;
+    const outcomingAmount = Number(Engineer.OutcomingAmount) || 0;
+    const BalanceAmount =
+      contractAmount + reimbersement - incomingAmount - outcomingAmount;
+    console.log('>>> BalanceAmount: ', BalanceAmount);
+
+    const CreatedBy = req.body.user.id;
+    console.log('>>> createdby in the newproject api: ', CreatedBy);
+
     if (
       !ID ||
       !Name ||
       !Address ||
       !City ||
-      !ContractAmount ||
-      !Reimbersement ||
-      !PaidAmount
+      !contractAmount ||
+      !reimbersement ||
+      !incomingAmount
     ) {
       const missedFieldErr = {
         log: 'Express error handler caught profileController.newProject error',
@@ -125,10 +141,6 @@ profileController.newProject = async (req, res, next) => {
       };
       return next(missedFieldErr);
     }
-
-    const BalanceAmount = ContractAmount + Reimbersement - PaidAmount;
-    const CreatedBy = req.body.user.id;
-    console.log('>>> createdby in the newproject api: ', CreatedBy);
 
     const projectData = {
       ID: ID,
@@ -142,11 +154,18 @@ profileController.newProject = async (req, res, next) => {
       EndDate: EndDate,
       Status: Status,
 
-      ContractAmount: ContractAmount,
-      Reimbersement: Reimbersement,
-      PaidAmount: PaidAmount,
+      ContractAmount: contractAmount,
+      Reimbersement: reimbersement,
+      IncomingAmount: incomingAmount,
       BalanceAmount: BalanceAmount,
 
+      Engineer: [
+        {
+          Name: Engineer.Name || 'Jeff',
+          OutcomingAmount: Engineer.OutcomingAmount || 0,
+          Deadline: Engineer.Deadline || StartDate,
+        },
+      ],
       CreatedBy: CreatedBy,
       ClientID: res.locals.clientid,
     };
@@ -166,6 +185,11 @@ profileController.newProject = async (req, res, next) => {
     };
     return next(createProjectDBError);
   }
+};
+
+profileController.getproject = async (req, res, next) => {
+  const userid = res.locals.user.ID;
+  return next();
 };
 
 module.exports = profileController;

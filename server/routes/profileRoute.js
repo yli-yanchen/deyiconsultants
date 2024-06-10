@@ -16,4 +16,13 @@ router.post(
   }
 );
 
+router.get(
+  '/getproject',
+  profileController.getuser,
+  profileController.getproject,
+  (req, res) => {
+    res.status(200).json(res.locals.project);
+  }
+);
+
 module.exports = router;
