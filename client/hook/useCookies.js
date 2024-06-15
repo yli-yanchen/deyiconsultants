@@ -1,9 +1,12 @@
-import { useCookies } from "react-cookie";
+import { useCookies } from 'react-cookie';
 
-export const useGetToken = () => {
-  const [cookies, _] = useCookies(["accessToken"]);
+const useGetToken = () => {
+  const [cookies, , removeCookie] = useCookies(['accessToken']);
 
   return {
     headers: { authorization: cookies.accessToken },
+    removeToken: () => removeCookie('accessToken'),
   };
 };
+
+export default useGetToken;
