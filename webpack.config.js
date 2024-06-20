@@ -1,11 +1,11 @@
-const path = require("path");
-const Dotenv = require("dotenv-webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, "client", "index.js"),
+  entry: path.join(__dirname, 'client', 'index.js'),
   output: {
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, 'build'),
   },
   mode: process.env.NODE_ENV,
   module: {
@@ -14,35 +14,35 @@ module.exports = {
         test: /\.(?:js|mjs|jsx|cjs)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             presets: [
-              ["@babel/preset-env", { targets: "defaults" }],
-              "@babel/preset-react",
+              ['@babel/preset-env', { targets: 'defaults' }],
+              '@babel/preset-react',
             ],
           },
         },
       },
       {
         test: /\.(css|scss)$/i,
-        use: ["style-loader", "css-loader", "sass-loader", "postcss-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
       },
       {
         test: /\.(png|jpe?g|JPG)$/,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },
   plugins: [
     new Dotenv(),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "client", "index.html"),
+      template: path.join(__dirname, 'client', 'index.html'),
     }),
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, "/build"),
-      publicPath: "/",
+      directory: path.join(__dirname, '/build'),
+      publicPath: '/',
     },
     hot: true,
     historyApiFallback: true,
@@ -50,8 +50,8 @@ module.exports = {
     port: 8080,
     proxy: [
       {
-        context: ["/api"],
-        target: "http://localhost:8000",
+        context: ['/api'],
+        target: 'http://localhost:3000',
         // "/api": {
         //   target: "http://localhost:3000",
         //   // target: "http://localhost:3000/api",
@@ -62,6 +62,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ['.js', '.jsx'],
   },
 };
